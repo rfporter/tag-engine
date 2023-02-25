@@ -2,7 +2,11 @@
 <Project Type="Project" LVVersion="18008000">
 	<Property Name="CCSymbols" Type="Str"></Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">true</Property>
-	<Property Name="NI.Project.Description" Type="Str"></Property>
+	<Property Name="NI.Project.Description" Type="Str">The Tag Engine provides a simple API for sharing data across separate code modules.
+
+At its core, a Tag is just a variant value that can be looked up globally by name or by data value reference. However, this API provides additional functionality that helps to reduce code redundancy and avoid common pitfalls.
+
+The general rule for using the tag engine is that the module that creates a tag should be the only module that writes directly to the tag's value. Any other module must REQUEST to change the value of the tag by triggering the tag's SetRequest event. The tag's creator can listen for this event and decide how to handle the request.</Property>
 	<Item Name="My Computer" Type="My Computer">
 		<Property Name="NI.SortType" Type="Int">3</Property>
 		<Property Name="server.app.propertiesEnabled" Type="Bool">true</Property>

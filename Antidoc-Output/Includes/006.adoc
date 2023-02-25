@@ -1,0 +1,74 @@
+== Tag Expr.lvclass
+
+*Responsibility:*
+No description found (add content in lvclass description)
+
+*Version:* 1.0.0.0
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Tag Expr" {
+{field} -TagVarNames : Array of String
+{field} -varNames : Array of String
+{field} -TagVarRefs : Array of DataValue
+{field} -TagVarTypes : Array of Enum {}
+{static} {method} +Lookup Tag Values()
+{static} {method} +Tag Expr Eval()
+{method} +Construct()
+
+}
+"mupExpr" <|-- "Tag Expr"
+
+
+
+@enduml
+....
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Construct
+|image:Tag_Expr.lvclass_Construct.vi.png[Tag Expr.lvclass:Construct.vi]
+|+++Construct a new muExpr instance. Input an expression or a set of expressions.+++
++++Returns the expression handle and the list of variables found in the expression.+++
+
++++Optionally input a list of constant name-value pairs.+++
+
++++Set "Use system decimal point" to true if you want to adapt to the system's decimal point. If the system's decimal point is a comma, the argument separator will be changed to a semi-colon. The default decimal point is a period. The default argument separator is a comma.+++
+
++++Set Bulk Size sets the range for bulk mode evaluations. Default is 1 (single result).+++
+
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Lookup Tag Values
+|image:Tag_Expr.lvclass_Lookup_Tag_Values.vi.png[Tag Expr.lvclass:Lookup Tag Values.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Tag Expr Eval
+|image:Tag_Expr.lvclass_Tag_Expr_Eval.vi.png[Tag Expr.lvclass:Tag Expr Eval.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined

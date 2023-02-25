@@ -1,0 +1,101 @@
+== Tag Engine.lvlib
+
+*Responsibility:*
+No description found (add content in lvlib description)
+
+*Version:* 1.0.0.0
+
+.Nested libraries
+[cols="<.<1d,<.<1d", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Type
+
+|<<Tag Core.lvclass>>
+|LVClass
+
+|<<Tag.lvclass>>
+|LVClass
+|===
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Array of VData to VCluster_openG
+|image:Tag_Engine.lvlib_Array_of_VData_to_VCluster_openG.vi.png[Tag Engine.lvlib:Array of VData to VCluster_openG.vi]
+|+++Returns the elements of an array as elements of a variant cluster.+++
+
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Build Tags from JSON List
+|image:Tag_Engine.lvlib_Build_Tags_from_JSON_List.vi.png[Tag Engine.lvlib:Build Tags from JSON List.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Flatten Tags to JSON List
+|image:Tag_Engine.lvlib_Flatten_Tags_to_JSON_List.vi.png[Tag Engine.lvlib:Flatten Tags to JSON List.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Init SetRequest Events Cluster
+|image:Tag_Engine.lvlib_Init_SetRequest_Events_Cluster.vim.png[Tag Engine.lvlib:Init SetRequest Events Cluster.vim]
+|+++Input a cluster of SetRequest events with labels corresponding to the+++
++++desired CVT tag.+++
+
++++Optionally the specified namespace can be prepended to the cluster labels.+++
+
++++Output is the same cluster, but with event references populated with CVT tag's+++
++++event references+++
+
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Init Tag Ref Cluster
+|image:Tag_Engine.lvlib_Init_Tag_Ref_Cluster.vim.png[Tag Engine.lvlib:Init Tag Ref Cluster.vim]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Init ValChange Events Cluster
+|image:Tag_Engine.lvlib_Init_ValChange_Events_Cluster.vim.png[Tag Engine.lvlib:Init ValChange Events Cluster.vim]
+|+++Input a cluster of ValueChange events with labels corresponding to the+++
++++desired CVT tag.+++
+
++++Optionally the specified namespace can be prepended to the cluster labels.+++
+
++++Output is the same cluster, but with event references populated with CVT tag's+++
++++event references+++
+
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Variant to DBL
+|image:Tag_Engine.lvlib_Variant_to_DBL.vi.png[Tag Engine.lvlib:Variant to DBL.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Variant to String
+|image:Tag_Engine.lvlib_Variant_to_String.vi.png[Tag Engine.lvlib:Variant to String.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined

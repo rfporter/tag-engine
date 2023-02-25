@@ -1,0 +1,300 @@
+== Tag.lvclass
+
+*Responsibility:*
++++Variant value with some standard properties+++
+
+
+*Version:* 1.0.0.0
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Tag Engine.lvlib:Tag" {
+{field} +Name : String
+{field} +Value : Variant
+{field} -Enable ValChange Event : Boolean
+{field} +ValChange : UserEvent
+{field} +Timestamp : Timestamp
+{field} -Properties : Variant
+{field} +Type : Enum {}
+{field} +SetRequest : UserEvent
+{field} -Enable SetRequest Event : Boolean
+{field} +Stale : Boolean
+{field} +TypeString : Array of I16
+{static} {method} +Flatten to JSON Config()
+{static} {method} +Unflatten from JSON Config()
+{static} {method} +Get Property by Name()
+{static} {method} +Set Property by Name()
+{static} {method} +Set Properties from Initial()
+{static} {method} +Destruct()
+{static} {method} +Construct()
+
+}
+
+
+
+@enduml
+....
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Read Name
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Name.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Name.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Timestamp
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Timestamp.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Timestamp.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Value
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Value.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Value.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Value
+|image:Tag_Engine.lvlib_Tag.lvclass_Write_Value.vi.png[Tag Engine.lvlib:Tag.lvclass:Write Value.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Type
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Type.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Type.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read ValChange
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_ValChange.vi.png[Tag Engine.lvlib:Tag.lvclass:Read ValChange.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Config String
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Config_String.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Config String.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Description
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Description.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Description.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Description
+|image:Tag_Engine.lvlib_Tag.lvclass_Write_Description.vi.png[Tag Engine.lvlib:Tag.lvclass:Write Description.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Max
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Max.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Max.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Max
+|image:Tag_Engine.lvlib_Tag.lvclass_Write_Max.vi.png[Tag Engine.lvlib:Tag.lvclass:Write Max.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Min
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Min.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Min.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Min
+|image:Tag_Engine.lvlib_Tag.lvclass_Write_Min.vi.png[Tag Engine.lvlib:Tag.lvclass:Write Min.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Default
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Default.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Default.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Default
+|image:Tag_Engine.lvlib_Tag.lvclass_Write_Default.vi.png[Tag Engine.lvlib:Tag.lvclass:Write Default.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Units
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Units.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Units.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Units
+|image:Tag_Engine.lvlib_Tag.lvclass_Write_Units.vi.png[Tag Engine.lvlib:Tag.lvclass:Write Units.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Initial
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Initial.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Initial.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read SetRequest Event
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_SetRequest_Event.vi.png[Tag Engine.lvlib:Tag.lvclass:Read SetRequest Event.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Rank
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Rank.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Rank.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read ElementType
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_ElementType.vi.png[Tag Engine.lvlib:Tag.lvclass:Read ElementType.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Stale
+|image:Tag_Engine.lvlib_Tag.lvclass_Write_Stale.vi.png[Tag Engine.lvlib:Tag.lvclass:Write Stale.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Stale
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Stale.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Stale.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Property List
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_Property_List.vi.png[Tag Engine.lvlib:Tag.lvclass:Read Property List.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Read TypeString
+|image:Tag_Engine.lvlib_Tag.lvclass_Read_TypeString.vi.png[Tag Engine.lvlib:Tag.lvclass:Read TypeString.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Flatten to JSON Config
+|image:Tag_Engine.lvlib_Tag.lvclass_Flatten_to_JSON_Config.vi.png[Tag Engine.lvlib:Tag.lvclass:Flatten to JSON Config.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Unflatten from JSON Config
+|image:Tag_Engine.lvlib_Tag.lvclass_Unflatten_from_JSON_Config.vi.png[Tag Engine.lvlib:Tag.lvclass:Unflatten from JSON Config.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Get Property by Name
+|image:Tag_Engine.lvlib_Tag.lvclass_Get_Property_by_Name.vi.png[Tag Engine.lvlib:Tag.lvclass:Get Property by Name.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Set Property by Name
+|image:Tag_Engine.lvlib_Tag.lvclass_Set_Property_by_Name.vi.png[Tag Engine.lvlib:Tag.lvclass:Set Property by Name.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Set Properties from Initial
+|image:Tag_Engine.lvlib_Tag.lvclass_Set_Properties_from_Initial.vi.png[Tag Engine.lvlib:Tag.lvclass:Set Properties from Initial.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-shared.png[reentrancy-shared.png]
+|image:empty.png[empty.png]
+
+|Write SetRequest
+|image:Tag_Engine.lvlib_Tag.lvclass_Write_SetRequest.vi.png[Tag Engine.lvlib:Tag.lvclass:Write SetRequest.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Value with Timestamp
+|image:Tag_Engine.lvlib_Tag.lvclass_Write_Value_with_Timestamp.vi.png[Tag Engine.lvlib:Tag.lvclass:Write Value with Timestamp.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Destruct
+|image:Tag_Engine.lvlib_Tag.lvclass_Destruct.vi.png[Tag Engine.lvlib:Tag.lvclass:Destruct.vi]
+|No description found (add content in vi description)
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Construct
+|image:Tag_Engine.lvlib_Tag.lvclass_Construct.vi.png[Tag Engine.lvlib:Tag.lvclass:Construct.vi]
+|+++Initializes the CVT item object.+++
++++The input initial value will define the type.+++
+
++++The input CVT item name is sanitized. Illegal characters are replaced with underscores.+++
+
++++Additional properties can be passed in as attributes of the properties varriant.+++
+
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined

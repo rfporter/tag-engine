@@ -1,0 +1,91 @@
+== Classes overview
+
+This project contains 3 classes and 0 interface.
+
+.Classes list
+[cols="<.<1d,<.<1d", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Classes |Interfaces
+
+|<<Tag Core.lvclass>>
+|
+
+|<<Tag.lvclass>>
+|
+
+|<<Tag Expr.lvclass>>
+|
+|===
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Tag Engine.lvlib:Tag Core" {
+{field} -Tag LUT : Variant
+{static} {method} -Add Tag()
+{static} {method} -Get Tag LUT()
+{static} {method} +Get Tag Value_ByRef()
+{static} {method} +Send Tag SetRequest_ByRef()
+{static} {method} +Destruct Tag_By Ref()
+{static} {method} +Get All Tags()
+{static} {method} +Get Tag()
+{static} {method} +Get Tag Property()
+{static} {method} +Get Tag SetRequest Event()
+{static} {method} +Get Tag ValChange Event()
+{static} {method} +Get Tag Value()
+{static} {method} +New Tag()
+{static} {method} +New Tag_From JSON Config()
+{static} {method} +Send Tag SetRequest()
+{static} {method} +Set Tag Property()
+{static} {method} +Initialize()
+{static} {method} +Destruct()
+
+}
+
+
+class "Tag Engine.lvlib:Tag" {
+{field} +Name : String
+{field} +Value : Variant
+{field} -Enable ValChange Event : Boolean
+{field} +ValChange : UserEvent
+{field} +Timestamp : Timestamp
+{field} -Properties : Variant
+{field} +Type : Enum {}
+{field} +SetRequest : UserEvent
+{field} -Enable SetRequest Event : Boolean
+{field} +Stale : Boolean
+{field} +TypeString : Array of I16
+{static} {method} +Flatten to JSON Config()
+{static} {method} +Unflatten from JSON Config()
+{static} {method} +Get Property by Name()
+{static} {method} +Set Property by Name()
+{static} {method} +Set Properties from Initial()
+{static} {method} +Destruct()
+{static} {method} +Construct()
+
+}
+
+
+class "Tag Expr" {
+{field} -TagVarNames : Array of String
+{field} -varNames : Array of String
+{field} -TagVarRefs : Array of DataValue
+{field} -TagVarTypes : Array of Enum {}
+{static} {method} +Lookup Tag Values()
+{static} {method} +Tag Expr Eval()
+{method} +Construct()
+
+}
+"mupExpr" <|-- "Tag Expr"
+
+
+
+@enduml
+....
