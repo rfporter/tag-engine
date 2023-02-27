@@ -1,7 +1,7 @@
 == Tag Core.lvclass
 
 *Responsibility:*
-+++Tag engine core holds the lookup table of all system tags. It also defines the public API for interacting with tags.+++
++++Tag engine core holds the lookup table of all tags. It also defines the public API for interacting with tags.+++
 
 
 *Version:* 1.0.0.0
@@ -73,15 +73,17 @@ class "Tag Engine.lvlib:Tag Core" {
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Destruct_Tag_By_Ref.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Destruct Tag_By Ref.vi]
 |+++Destruct a single CVT item by reference.+++
 
++++No error is returned if the tag is not found.+++
+
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
 |image:empty.png[empty.png]
 
 |Get All Tags
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_All_Tags.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Get All Tags.vi]
-|+++Return a list of all CVT item names and references.+++
+|+++Return a list of all Tag Names and references.+++
 
-+++Optionally specify a filter. Only matched item names will be returned. Standard "Match Pattern" syntax applies. Match is not case sensitive.+++
++++Optionally specify a filter. Only matched Tag names will be returned. Standard "Match Pattern" syntax applies. Match is not case sensitive.+++
 
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
@@ -89,9 +91,9 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Get Tag
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag.vi]
-|+++Lookup the reference of a CVT item.+++
+|+++Lookup the reference of a Tag.+++
 
-+++Optionally specify a namespace, which is prepended to the item name (colon separator).+++
++++Optionally specify a namespace, which is prepended to the tag name (colon separator).+++
 
 +++If the tag is not found, the found output is false and Error 5602 is returned.+++
 
@@ -101,7 +103,7 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Get Tag Property
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag_Property.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag Property.vim]
-|+++Read a CVT item's property.+++
+|+++Read a Tag's property.+++
 
 +++If the property does not exist, error 5602 is returned.+++
 
@@ -115,7 +117,7 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Get Tag SetRequest Event
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag_SetRequest_Event.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag SetRequest Event.vi]
-|+++Lookup a CVT item's set request event.+++
+|+++Lookup a Tag's set request event.+++
 
 +++If the tag is not found, error 5602 is returned.+++
 
@@ -125,7 +127,7 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Get Tag ValChange Event
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag_ValChange_Event.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag ValChange Event.vi]
-|+++Lookup a CVT item's value change event.+++
+|+++Lookup a Tag's value change event.+++
 
 +++If the CVT item is not found, error 5602 is returned.+++
 
@@ -135,28 +137,41 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Get Tag Value
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag_Value.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag Value.vim]
-|No description found (add content in vi description)
+|+++Get a Tag's (or a list of tags) current value(s) and timestamp(s).+++
+
++++The Tag Name(s)/Ref(s) input can be either the Tag Name, an array of Tag Names, a Tag Reference, or an array of Tag References.+++
+
++++Optionally specify a namespace, which is prepended to the tag name(s), using colon as separator.+++
+
++++If a tag is not found, the default value is returned along with Error 5602.+++
+
++++The Default input defines the expected data type of the value, as well as the default value returned in case of error. If no default value is specified, the value is returned as a variant.+++
+
++++Specify relaxed type along with a DBL or String default value to attempt to coerce the returned type to string or DBL.+++
+
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
 |image:inlined.png[inlined.png]
 
 |New Tag
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_New_Tag.vim.png[Tag Engine.lvlib:Tag Core.lvclass:New Tag.vim]
-|+++Create a new CVT item+++
+|+++Create a new Tag+++
 
-+++Name of the new CVT item. This name, including the optional namespace, can be used for item lookup operations after creation. Recommended namespace separator is a colon.+++
++++The Tag Name, including the optional namespace, can be used for item lookup operations after creation. Namespace separator is a colon.+++
 +++Max length 256 characters. Valid characters are: a-z A-Z 0-9 : _+++
 +++Although names are stored in original case, lookups are not case sensitive.+++
 
-+++Optional namespace to be prepended to the CVT item name (separated by a colon). Do not specify a namespace if the full tag name had been specified by the Name input.+++
++++Optional namespace to be prepended to the Tag name (separated by a colon). Do not specify a namespace if the full tag name had been specified by the Tag Name input.+++
 
 +++Set init as stale to true to indicate that no real measurement has occured since the tag was created. Default value is false.+++
 
-+++Units of measure for numeric CVT item.+++
++++Units of measure for numeric-type tags.+++
 
-+++Optional description of the CVT item.+++
++++Optional description of the tag can be specified.+++
 
-+++Initial value for the CVT item. Also defines the datatype of the CVT item.+++
++++Initial value for the Tag also defines the Tag's datatype.+++
+
++++Error 5601 is returned if the Tag Name already exists.+++
 
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
@@ -164,9 +179,9 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |New Tag_From JSON Config
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_New_Tag_From_JSON_Config.vi.png[Tag Engine.lvlib:Tag Core.lvclass:New Tag_From JSON Config.vi]
-|+++Build a new CVT item from a JSON string.+++
+|+++Build a new Tag from a JSON config string.+++
 
-+++The JSON string must at least specify the Name, Type, Typestring, and initial value property.+++
++++The JSON config string must at least specify the Name, Type, Typestring, and initial value property.+++
 
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
@@ -174,17 +189,17 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Send Tag SetRequest
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Send_Tag_SetRequest.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Send Tag SetRequest.vim]
-|+++Fire a set value request event on the specified CVT item.+++
+|+++Trigger a set value request event on the specified Tag.+++
 
-+++Specify either the CVT item name or CVT item reference, or a list of CVT item names or references.+++
++++Specify either the Tag name or Tag reference, or a list of Tag names or references.+++
 
-+++Optionally specify a namespace to prepend to the CVT item name(s).+++
++++Optionally specify a namespace to prepend to the Tag name(s).+++
 
-+++Specify the requested set value (or list of values for multiple CVT items)+++
++++Specify the requested set value (or list of values for multiple Tags)+++
 
-+++Set synchronous to true to wait (up to the timeout) for a response from the CVT item's event handler that the request has been handled. With a timeout of -1, the set request will wait indefinitely. If the request times out, timeout is set to true but NO ERROR IS RETURNED.+++
++++Set synchronous to true to wait (up to the timeout) for a response from the Tag's event handler that the request has been completed. With a timeout of -1, the set request will wait indefinitely. If the request times out, timeout is set to true but NO ERROR IS RETURNED.+++
 
-+++Set synchronous to false, will fire the event and move on without waiting for the event to be handled.+++
++++Set synchronous to false, will trigger the event and move on without waiting for confirmation of completion.+++
 
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
@@ -192,7 +207,7 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Set Tag Property
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Set_Tag_Property.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Set Tag Property.vim]
-|+++Set a CVT item's property.+++
+|+++Set a Tag's property.+++
 
 +++If the property doesn't exist, it will be created. Otherwise the value will be replaced.+++
 
@@ -202,13 +217,13 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Write Tag Value
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Write_Tag_Value.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Write Tag Value.vim]
-|+++Write the value of the specified CVT item(s).+++
+|+++Write the value of the specified Tag(s).+++
 
-+++Specify either the CVT item name, CVT item reference, or a list of CVT item names or references.+++
++++Specify either the Tag name, Tag reference, or a list of Tag names or references.+++
 
-+++Optionally specify a namespace to prepend to the CVT item name(s).+++
++++Optionally specify a namespace to prepend to the Tag name(s).+++
 
-+++Specify the requested set value (or list of values for multiple CVT items)+++
++++Specify the requested set value (or list of values for multiple Tags)+++
 
 +++Specify a timestamp to associate with the value, otherwise a new one is created (now).+++
 
@@ -220,9 +235,9 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Initialize
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Initialize.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Initialize.vi]
-|+++Initialize the CVT item store.+++
+|+++Initialize the Tag store.+++
 
-+++Call this VI at the startup of your main process (that does not leave memory until your application is stopped). The DVR store will be owned by this process.+++
++++Call this VI at the startup of your main process (that does not leave memory until your application is stopped). The Tag store will be owned by this process.+++
 
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
@@ -230,7 +245,7 @@ class "Tag Engine.lvlib:Tag Core" {
 
 |Destruct
 |image:Tag_Engine.lvlib_Tag_Core.lvclass_Destruct.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Destruct.vi]
-|+++Destroy every CVT item and the CVT item store+++
+|+++Destroy every Tag and then the Tag store+++
 
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]

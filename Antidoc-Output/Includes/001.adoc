@@ -1,7 +1,8 @@
 == Tag Engine.lvlib
 
 *Responsibility:*
-No description found (add content in lvlib description)
++++Tag Engine Library contains the tag engine core as well as the tag object definition.+++
+
 
 *Version:* 1.0.0.0
 
@@ -24,22 +25,25 @@ No description found (add content in lvlib description)
 
 |Array of VData to VCluster_openG
 |image:Tag_Engine.lvlib_Array_of_VData_to_VCluster_openG.vi.png[Tag Engine.lvlib:Array of VData to VCluster_openG.vi]
-|+++Returns the elements of an array as elements of a variant cluster.+++
-
+|No description found (add content in vi description)
 |image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
 
 |Build Tags from JSON List
 |image:Tag_Engine.lvlib_Build_Tags_from_JSON_List.vi.png[Tag Engine.lvlib:Build Tags from JSON List.vi]
-|No description found (add content in vi description)
+|+++Build multiple Tags from a JSON array of Tag configurations.+++
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 
 |Flatten Tags to JSON List
 |image:Tag_Engine.lvlib_Flatten_Tags_to_JSON_List.vi.png[Tag Engine.lvlib:Flatten Tags to JSON List.vi]
-|No description found (add content in vi description)
+|+++Create a JSON array of Tag configurations from a list of Tags.+++
+
++++If the input list of Tag Names is empty, all Tags will be used to generate the JSON array.+++
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
@@ -47,11 +51,12 @@ No description found (add content in lvlib description)
 |Init SetRequest Events Cluster
 |image:Tag_Engine.lvlib_Init_SetRequest_Events_Cluster.vim.png[Tag Engine.lvlib:Init SetRequest Events Cluster.vim]
 |+++Input a cluster of SetRequest events with labels corresponding to the+++
-+++desired CVT tag.+++
++++desired Tag Names.+++
 
-+++Optionally the specified namespace can be prepended to the cluster labels.+++
++++Optionally the specified namespace can be prepended to the cluster labels to+++
++++form the Tag Names.+++
 
-+++Output is the same cluster, but with event references populated with CVT tag's+++
++++Output is the same cluster, but with event references populated with Tag's+++
 +++event references+++
 
 |image:empty.png[empty.png]
@@ -60,7 +65,15 @@ No description found (add content in lvlib description)
 
 |Init Tag Ref Cluster
 |image:Tag_Engine.lvlib_Init_Tag_Ref_Cluster.vim.png[Tag Engine.lvlib:Init Tag Ref Cluster.vim]
-|No description found (add content in vi description)
+|+++Input a cluster of Tag references with labels corresponding to the+++
++++desired Tag Name.+++
+
++++Optionally the specified namespace can be prepended to the cluster labels to+++
++++form the Tag Name.+++
+
++++Output is the same cluster, but with Tag references populated with Tag's+++
++++actual reference+++
+
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
 |image:inlined.png[inlined.png]
@@ -68,12 +81,13 @@ No description found (add content in lvlib description)
 |Init ValChange Events Cluster
 |image:Tag_Engine.lvlib_Init_ValChange_Events_Cluster.vim.png[Tag Engine.lvlib:Init ValChange Events Cluster.vim]
 |+++Input a cluster of ValueChange events with labels corresponding to the+++
-+++desired CVT tag.+++
++++desired Tag Name.+++
 
-+++Optionally the specified namespace can be prepended to the cluster labels.+++
++++Optionally the specified namespace can be prepended to the cluster labels to+++
++++form the Tag Name.+++
 
-+++Output is the same cluster, but with event references populated with CVT tag's+++
-+++event references+++
++++Output is the same cluster, but with event references populated with Tag's+++
++++ValChange event references.+++
 
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
@@ -81,14 +95,30 @@ No description found (add content in lvlib description)
 
 |Variant to DBL
 |image:Tag_Engine.lvlib_Variant_to_DBL.vi.png[Tag Engine.lvlib:Variant to DBL.vi]
-|No description found (add content in vi description)
+|+++Attempt to convert a variant value to Double precision floating point.+++
+
++++This might work for the following types:+++
++++- Boolean: T=1.0, F=0.0+++
++++- Unsigned Integer: U8..U64, Enum U8..U64+++
++++- Signed Integer: I8..I64+++
++++- Floating Point: SGL, DBL, EXT+++
++++- String: Assuming Frac/Expr string using dot decimal place.+++
++++- Timestamp: Converts to time in seconds.+++
+
++++Unsupported types will return NaN for the value, without producing an error.+++
+
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
 |image:inlined.png[inlined.png]
 
 |Variant to String
 |image:Tag_Engine.lvlib_Variant_to_String.vi.png[Tag Engine.lvlib:Variant to String.vi]
-|No description found (add content in vi description)
+|+++Attempt to represent the input varriant value as a string.+++
+
++++This VI just calls "Variant to JSON Text.vi"+++
+
++++Returned strings are in JSON-compatible value format.+++
+
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
 |image:inlined.png[inlined.png]

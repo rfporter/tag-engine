@@ -1,7 +1,8 @@
 == Tag Watchlist.lvlib
 
 *Responsibility:*
-No description found (add content in lvlib description)
++++The tag watchlist library contains the Tag Watchlist UI and supporting subVIs.+++
+
 
 *Version:* 1.0.0.0
 
@@ -19,56 +20,82 @@ No description found (add content in lvlib description)
 
 |Tag_Value_Entry_PopUp
 |image:Tag_Watchlist.lvlib_Tag_Value_Entry_PopUp.vi.png[Tag Watchlist.lvlib:Tag_Value_Entry_PopUp.vi]
-|No description found (add content in vi description)
+|+++Tag value entrry pop-up. By specifying a Tag Name, the tag's value is looked up and the appropriately typed popup is launched.+++
+
++++Select either SetRequest or WriteValue for Write Type. Write value should be for debugging and testing purposes only. Set Request send the value by Set Request event instead of writing directly to the Tag's value.+++
+
++++Supported Types are:+++
++++- Boolean+++
++++- Signed Integer+++
++++- Unsigned Integer+++
++++- Floating Point+++
++++- String+++
+
++++Any other type will launch the string value entry popup with the JSON representation of the value. BE CAREFUL.+++
+
+
+
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 
 |Value Entry_BOOL
 |image:Tag_Watchlist.lvlib_Value_Entry_BOOL.vi.png[Tag Watchlist.lvlib:Value Entry_BOOL.vi]
-|No description found (add content in vi description)
+|+++Boolean value pop-up window. Use spacebar to toggle the value.+++
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 
 |Value Entry_DBL
 |image:Tag_Watchlist.lvlib_Value_Entry_DBL.vi.png[Tag Watchlist.lvlib:Value Entry_DBL.vi]
-|No description found (add content in vi description)
+|+++DBL value entry Pop-up window.+++
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 
 |Value Entry_I32
 |image:Tag_Watchlist.lvlib_Value_Entry_I32.vi.png[Tag Watchlist.lvlib:Value Entry_I32.vi]
-|No description found (add content in vi description)
+|+++I32 value entry pop-up window.+++
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 
 |Value Entry_STR
 |image:Tag_Watchlist.lvlib_Value_Entry_STR.vi.png[Tag Watchlist.lvlib:Value Entry_STR.vi]
-|No description found (add content in vi description)
+|+++String value entry pop-up window.+++
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 
 |Value Entry_U32
 |image:Tag_Watchlist.lvlib_Value_Entry_U32.vi.png[Tag Watchlist.lvlib:Value Entry_U32.vi]
-|No description found (add content in vi description)
+|+++U32 value entry pop-up window.+++
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 
 |Launch Tag Watchlist UI
 |image:Tag_Watchlist.lvlib_Launch_Tag_Watchlist_UI.vi.png[Tag Watchlist.lvlib:Launch Tag Watchlist UI.vi]
-|No description found (add content in vi description)
+|+++Tag watchlist launcher. Allows non-blocking launch of Tag Watchlist window (fire and forget), while allowing only one instance to be running.+++
+
++++The input Shutdown Event should be used to shutdown the Tag Watchlist window in the event of main application shutdown.+++
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 
 |Tag Watchlist UI
 |image:Tag_Watchlist.lvlib_Tag_Watchlist_UI.vi.png[Tag Watchlist.lvlib:Tag Watchlist UI.vi]
-|No description found (add content in vi description)
+|+++Tag Watchlist window can view and modify any existing Tag.+++
+
++++Use the Watchlist launcher to run this VI in your application.+++
+
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]
 |image:empty.png[empty.png]

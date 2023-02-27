@@ -281,13 +281,7 @@ class "Tag Engine.lvlib:Tag" {
 
 |Construct
 |image:Tag_Engine.lvlib_Tag.lvclass_Construct.vi.png[Tag Engine.lvlib:Tag.lvclass:Construct.vi]
-|+++Initializes the CVT item object.+++
-+++The input initial value will define the type.+++
-
-+++The input CVT item name is sanitized. Illegal characters are replaced with underscores.+++
-
-+++Additional properties can be passed in as attributes of the properties varriant.+++
-
+|No description found (add content in vi description)
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
 |image:inlined.png[inlined.png]

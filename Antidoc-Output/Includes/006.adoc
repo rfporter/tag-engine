@@ -1,7 +1,14 @@
 == Tag Expr.lvclass
 
 *Responsibility:*
-No description found (add content in lvclass description)
++++The Tag Expr class extends the mupExpr class (from muParser library), adding support for the Tag Engine.+++
+
++++Expressions can include any existing Tag Name. Tag references are cached for faster value lookup during expression evaluation.+++
+
++++Note that Tag values are coerced to DBL before evaluating the expression.+++
+
++++Also note that any mupExpr eval function can be used, however Tag Expr Eval is included in this class for convenience.+++
+
 
 *Version:* 1.0.0.0
 
@@ -54,14 +61,30 @@ class "Tag Expr" {
 
 |Lookup Tag Values
 |image:Tag_Expr.lvclass_Lookup_Tag_Values.vi.png[Tag Expr.lvclass:Lookup Tag Values.vi]
-|No description found (add content in vi description)
+|+++Lookup the current values of all Tags within the expression.+++
+
++++Values are coerced to DBL type.+++
+
++++Supported types are for Coercion are:+++
++++- Boolean+++
++++- Signed Integer+++
++++- Unsigned Integer+++
++++- Floating Point+++
++++- String (with period decimal point)+++
++++- Timestamp+++
+
++++All other types will return NaN with error 5605 reported.+++
+
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
 |image:inlined.png[inlined.png]
 
 |Tag Expr Eval
 |image:Tag_Expr.lvclass_Tag_Expr_Eval.vi.png[Tag Expr.lvclass:Tag Expr Eval.vi]
-|No description found (add content in vi description)
+|+++This VI looks up current Tag values then evaluates the expression.+++
+
++++The Boolean result is true if the numeric result is not equal to zero or NaN.+++
+
 |image:empty.png[empty.png]
 |image:reentrancy-preallocated.png[reentrancy-preallocated.png]
 |image:inlined.png[inlined.png]
