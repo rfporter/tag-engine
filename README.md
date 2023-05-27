@@ -32,6 +32,9 @@ Install the vip package using VI Package Manager.
 # Changes
 v2.0.1.1
 - Variant data to string now simply calls JSONText's variant to string
+V2.0.2.1
+- Removed relaxed type feature from read tag value. It was too heavy.
+- Removed "out" from output name of Init ValChange Events Cluster.vim
 
 # Known Issues
 - All expressions are evaluated as DBL type. Must be aware that tag values are converted to DBL for eval.
