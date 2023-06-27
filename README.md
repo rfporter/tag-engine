@@ -35,13 +35,15 @@ v2.0.1.1
 V2.0.2.1
 - Removed relaxed type feature from read tag value. It was too heavy.
 - Removed "out" from output name of Init ValChange Events Cluster.vim
+V2.0.3.1
+- Removed relaxed type feature from get tag property
 
 # Known Issues
 - All expressions are evaluated as DBL type. Must be aware that tag values are converted to DBL for eval.
 - Need to be aware of the lifetime of DVRs. When a DVR creator's VI hierarchy leaves memory, so does the DVR.
 
 # Support
-Contact 
+Contact Porter on LAVA (https://lavag.org) or NI Forums (https://forums.ni.com/)
 
 # Acknowledgements
 Thanks to EZ-TechStop LLC and Canter Automation Inc for supporting this project.
