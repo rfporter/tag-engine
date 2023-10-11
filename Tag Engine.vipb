@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2018" Created_Date="2020-05-19 15:57:16" Modified_Date="2023-06-27 14:17:33" Creator="leonidas" Comments="" ID="ba3b19b6b8692c46875095cfb73175e9">
+<VI_Package_Builder_Settings Version="2018" Created_Date="2020-05-19 15:57:16" Modified_Date="2023-10-10 23:39:39" Creator="leonidas" Comments="" ID="26204a4eac96a036327b1be31cea772c">
   <Library_General_Settings>
     <Package_File_Name>Tag_Engine</Package_File_Name>
-    <Library_Version>2.0.3.2</Library_Version>
+    <Library_Version>2.0.3.3</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>..\builds\Tag Engine\Source Distribution</Library_Source_Folder>
     <Library_Output_Folder>..\builds\Tag Engine</Library_Output_Folder>
@@ -186,6 +186,7 @@ Key features of this library are:
       <close_labview_before_install>false</close_labview_before_install>
       <restart_labview_after_install>false</restart_labview_after_install>
       <skip_mass_compile_after_install>false</skip_mass_compile_after_install>
+      <install_into_global_environment>false</install_into_global_environment>
     </LabVIEW>
     <VI_Docs>
       <Edit_VI_Description>false</Edit_VI_Description>
@@ -397,7 +398,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Watchlist\Launch Tag Watchlist UI.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>1999E9FA7A0FFDB700BB060DFC73BA1D</GUID>
+      <GUID>483CDB0627D3E807475FFA63DE520C28</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -460,7 +461,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Tag Expr\Lookup Tag Values.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>C3A5060503D18C30F8D75BAD5C963F0E</GUID>
+      <GUID>614D1CFED1888E39C1516326DCAC9E33</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -551,7 +552,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Tools\Variant to String.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>CCF1F19EB503670E7ECCF118D6E2F040</GUID>
+      <GUID>79E9C7D8CD6A0694D97CDC766EA247A7</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -656,7 +657,7 @@ Key features of this library are:
         <Path/>
         <VI_Title/>
       </Items_Data>
-      <GUID>AFAFB2A0EC9AFA4E3969CEC6E573386E</GUID>
+      <GUID>91323C44BC0F3249A462ABD45F4F6CAC</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -719,7 +720,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Tools\Flatten Tags to JSON List.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>502E23045137C6856470CD854BB2620F</GUID>
+      <GUID>575E3AA60EC5CBF5FD872093CF82719A</GUID>
     </Functions_Palette_Data>
   </Library_Palette_Definition>
 </VI_Package_Builder_Settings>

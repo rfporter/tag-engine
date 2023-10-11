@@ -47,6 +47,7 @@ The general rule for using the tag engine is that the module that creates a tag 
 				<Item Name="mupExpr.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/LAVA/muParser/mupExpr/mupExpr.lvclass"/>
 				<Item Name="mupLib.lvlib" Type="Library" URL="/&lt;vilib&gt;/LAVA/muParser/mupLib/mupLib.lvlib"/>
 				<Item Name="Assert Array Dimension Count.vim" Type="VI" URL="/&lt;vilib&gt;/Utility/TypeAssert/Assert Array Dimension Count.vim"/>
+				<Item Name="libmuparser-lv.dll" Type="Document" URL="/&lt;vilib&gt;/LAVA/muParser/mupLib/libmuparser-lv.dll"/>
 			</Item>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
