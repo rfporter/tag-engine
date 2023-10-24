@@ -22,7 +22,7 @@ Key features of this library are:
 This library is open source and licensed under BSD 2-Clause.
 
 # Requirements
-- LabVIEW 2018 or later
+- LabVIEW 2020 or later
 - [muParser Expression Parser](https://www.vipm.io/package/lv_muparser/) v2.1.0.3
 - [JSONText](https://www.vipm.io/package/jdp_science_jsontext/) v1.6.10 or later
 
