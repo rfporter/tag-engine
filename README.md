@@ -37,6 +37,8 @@ V2.0.2.1
 - Removed "out" from output name of Init ValChange Events Cluster.vim
 V2.0.3.1
 - Removed relaxed type feature from get tag property
+V2.0.4.3
+- Flattened VIMs to try to avoid build issuse.
 
 # Known Issues
 - All expressions are evaluated as DBL type. Must be aware that tag values are converted to DBL for eval.

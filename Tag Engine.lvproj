@@ -19,12 +19,11 @@ The general rule for using the tag engine is that the module that creates a tag 
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
 		<Item Name="Examples" Type="Folder">
-			<Item Name="Tag Engine Test 2.vi" Type="VI" URL="../Examples/Tag Engine Test 2.vi"/>
-			<Item Name="Tag Expr Test.vi" Type="VI" URL="../Examples/Tag Expr Test.vi"/>
 			<Item Name="Benchmark (SubVI).vi" Type="VI" URL="../Examples/Benchmark (SubVI).vi"/>
 			<Item Name="Benchmark.vi" Type="VI" URL="../Examples/Benchmark.vi"/>
-			<Item Name="Tag Engine Test 3.vi" Type="VI" URL="../Examples/Tag Engine Test 3.vi"/>
-			<Item Name="Tag Engine Test 4.vi" Type="VI" URL="../Examples/Tag Engine Test 4.vi"/>
+			<Item Name="Tag Expr Test.vi" Type="VI" URL="../Examples/Tag Expr Test.vi"/>
+			<Item Name="Tag Engine Test 1.vi" Type="VI" URL="../Examples/Tag Engine Test 1.vi"/>
+			<Item Name="Tag Engine Test 2.vi" Type="VI" URL="../Examples/Tag Engine Test 2.vi"/>
 		</Item>
 		<Item Name="Tag Engine.lvlib" Type="Library" URL="../Tag Engine.lvlib"/>
 		<Item Name="Tag Watchlist.lvlib" Type="Library" URL="../Watchlist/Tag Watchlist.lvlib"/>
@@ -46,7 +45,6 @@ The general rule for using the tag engine is that the module that creates a tag 
 				<Item Name="Get LV Class Name.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/LVClass/Get LV Class Name.vi"/>
 				<Item Name="mupExpr.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/LAVA/muParser/mupExpr/mupExpr.lvclass"/>
 				<Item Name="mupLib.lvlib" Type="Library" URL="/&lt;vilib&gt;/LAVA/muParser/mupLib/mupLib.lvlib"/>
-				<Item Name="Assert Array Dimension Count.vim" Type="VI" URL="/&lt;vilib&gt;/Utility/TypeAssert/Assert Array Dimension Count.vim"/>
 				<Item Name="libmuparser-lv.dll" Type="Document" URL="/&lt;vilib&gt;/LAVA/muParser/mupLib/libmuparser-lv.dll"/>
 			</Item>
 		</Item>
