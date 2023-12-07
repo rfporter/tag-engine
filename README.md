@@ -40,7 +40,7 @@ V2.0.2.1
 V2.0.3.1
 - Removed relaxed type feature from get tag property
 
-V2.0.4.3
+V2.0.4.4
 - Flattened VIMs to try to avoid build issuse.
 
 # Known Issues
