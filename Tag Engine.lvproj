@@ -24,6 +24,7 @@ The general rule for using the tag engine is that the module that creates a tag 
 			<Item Name="Tag Expr Test.vi" Type="VI" URL="../Examples/Tag Expr Test.vi"/>
 			<Item Name="Tag Engine Test 1.vi" Type="VI" URL="../Examples/Tag Engine Test 1.vi"/>
 			<Item Name="Tag Engine Test 2.vi" Type="VI" URL="../Examples/Tag Engine Test 2.vi"/>
+			<Item Name="Tag Watchlist Example.vi" Type="VI" URL="../Examples/Tag Watchlist Example.vi"/>
 		</Item>
 		<Item Name="Tag Engine.lvlib" Type="Library" URL="../Tag Engine.lvlib"/>
 		<Item Name="Tag Watchlist.lvlib" Type="Library" URL="../Watchlist/Tag Watchlist.lvlib"/>
