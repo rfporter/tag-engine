@@ -43,6 +43,13 @@ V2.0.3.1
 V2.0.4.4
 - Flattened VIMs to try to avoid build issuse.
 
+V2.0.5.1
+- Fix Init Valchange Events Cluster - Valchange event lookup
+
+V2.0.6.1
+- Fixed issues 3-6
+- Added tag details popup to watch window.
+
 # Known Issues
 - All expressions are evaluated as DBL type. Must be aware that tag values are converted to DBL for eval.
 - Need to be aware of the lifetime of DVRs. When a DVR creator's VI hierarchy leaves memory, so does the DVR.
