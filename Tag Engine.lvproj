@@ -28,6 +28,7 @@ The general rule for using the tag engine is that the module that creates a tag 
 		</Item>
 		<Item Name="Tag Engine.lvlib" Type="Library" URL="../Tag Engine.lvlib"/>
 		<Item Name="Tag Watchlist.lvlib" Type="Library" URL="../Watchlist/Tag Watchlist.lvlib"/>
+		<Item Name="Tag Engine Core.lvlib" Type="Library" URL="../Tag Engine Core.lvlib"/>
 		<Item Name="Tag Expr.lvclass" Type="LVClass" URL="../Tag Expr/Tag Expr.lvclass"/>
 		<Item Name="Tag Engine.vipb" Type="Document" URL="../Tag Engine.vipb"/>
 		<Item Name="LICENSE" Type="Document" URL="../LICENSE"/>
@@ -59,8 +60,8 @@ The general rule for using the tag engine is that the module that creates a tag 
 				<Property Name="Bld_excludedDirectory[0].pathType" Type="Str">relativeToAppDir</Property>
 				<Property Name="Bld_excludedDirectory[1]" Type="Path">resource/objmgr</Property>
 				<Property Name="Bld_excludedDirectory[1].pathType" Type="Str">relativeToAppDir</Property>
-				<Property Name="Bld_excludedDirectory[2]" Type="Path">/C/ProgramData/National Instruments/InstCache/18.0</Property>
-				<Property Name="Bld_excludedDirectory[3]" Type="Path">/C/Users/leonidas/Documents/LabVIEW Data/2018(32-bit)/ExtraVILib</Property>
+				<Property Name="Bld_excludedDirectory[2]" Type="Path">/C/ProgramData/National Instruments/InstCache/20.0</Property>
+				<Property Name="Bld_excludedDirectory[3]" Type="Path">/C/Users/leonidas/Documents/LabVIEW Data/2020(32-bit)/ExtraVILib</Property>
 				<Property Name="Bld_excludedDirectory[4]" Type="Path">instr.lib</Property>
 				<Property Name="Bld_excludedDirectory[4].pathType" Type="Str">relativeToAppDir</Property>
 				<Property Name="Bld_excludedDirectory[5]" Type="Path">user.lib</Property>
@@ -69,16 +70,15 @@ The general rule for using the tag engine is that the module that creates a tag 
 				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/Source Distribution</Property>
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{8E3AE997-530C-44B7-967D-B0854E552052}</Property>
-				<Property Name="Bld_version.build" Type="Int">1</Property>
 				<Property Name="Bld_version.major" Type="Int">2</Property>
-				<Property Name="Bld_version.patch" Type="Int">2</Property>
+				<Property Name="Bld_version.minor" Type="Int">1</Property>
 				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
 				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/Source Distribution</Property>
 				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
 				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
 				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/Source Distribution/data</Property>
 				<Property Name="DestinationCount" Type="Int">2</Property>
-				<Property Name="Source[0].itemID" Type="Str">{E04E9075-FB09-469C-802A-A48C1B319C2D}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{E0A8ADE2-90A9-4574-B20C-8395BDB7DED8}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[1].itemID" Type="Ref">/My Computer/Tag Engine.lvlib</Property>
@@ -100,7 +100,12 @@ The general rule for using the tag engine is that the module that creates a tag 
 				<Property Name="Source[5].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[5].itemID" Type="Ref">/My Computer/README.md</Property>
 				<Property Name="Source[5].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="SourceCount" Type="Int">6</Property>
+				<Property Name="Source[6].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[6].itemID" Type="Ref">/My Computer/Tag Engine Core.lvlib</Property>
+				<Property Name="Source[6].Library.allowMissingMembers" Type="Bool">true</Property>
+				<Property Name="Source[6].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[6].type" Type="Str">Library</Property>
+				<Property Name="SourceCount" Type="Int">7</Property>
 			</Item>
 			<Item Name="Zipped Source" Type="Zip File">
 				<Property Name="Absolute[0]" Type="Bool">false</Property>

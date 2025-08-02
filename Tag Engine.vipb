@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2018" Created_Date="2020-05-19 15:57:16" Modified_Date="2024-03-16 08:57:37" Creator="leonidas" Comments="" ID="248102cc7f790e26fb9e6d7f4201f4b1">
+<VI_Package_Builder_Settings Version="2018" Created_Date="2020-05-19 15:57:16" Modified_Date="2025-08-02 03:51:25" Creator="leonidas" Comments="" ID="eead71a3c06fc23d7908f251e4c9b8be">
   <Library_General_Settings>
     <Package_File_Name>Tag_Engine</Package_File_Name>
-    <Library_Version>2.0.6.2</Library_Version>
+    <Library_Version>2.1.0.3</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>..\builds\Tag Engine\Source Distribution</Library_Source_Folder>
     <Library_Output_Folder>..\builds\Tag Engine</Library_Output_Folder>
@@ -17,8 +17,8 @@
   </Library_General_Settings>
   <Advanced_Settings>
     <Package_Dependencies>
-      <Additional_External_Dependencies>jdp_science_jsontext &gt;=1.4.5.91</Additional_External_Dependencies>
-      <Additional_External_Dependencies>lv_muparser &gt;=2.0.1.1</Additional_External_Dependencies>
+      <Additional_External_Dependencies>jdp_science_jsontext &gt;=1.9.1.125</Additional_External_Dependencies>
+      <Additional_External_Dependencies>lv_muparser &gt;=3.1.2.1</Additional_External_Dependencies>
     </Package_Dependencies>
     <Custom_Action_VIs>
       <Pre-Build_VI/>
@@ -51,8 +51,7 @@ Key features of this library are:
       <Copyright>Copyright (c) 2023, Ryan Porter</Copyright>
       <Packager>Ryan Porter</Packager>
       <URL>https://github.com/rfporter/tag-engine/</URL>
-      <Release_Notes>- Fixed issues 3-6
-- Added tag details popup to watchlist.</Release_Notes>
+      <Release_Notes>- Restructure for PPL support.</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
@@ -220,104 +219,6 @@ Key features of this library are:
       <Items_Data>
         <Type>Item</Type>
         <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Get Tag Value.vim</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>1</Row>
-          <Column>2</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Get Tag Value.vim</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Initialize.vi</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>2</Row>
-          <Column>1</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Initialize.vi</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>New Tag.vim</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>1</Row>
-          <Column>1</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\New Tag.vim</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Write Tag Value.vim</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>1</Row>
-          <Column>4</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Write Tag Value.vim</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Send Tag SetRequest.vim</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>1</Row>
-          <Column>5</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Send Tag SetRequest.vim</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Destruct.vi</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>2</Row>
-          <Column>5</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Destruct.vi</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Get Tag SetRequest Event.vi</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>2</Row>
-          <Column>4</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Get Tag SetRequest Event.vi</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
         <NameSub_Menu_Name>Get Tag ValChange Event.vi</NameSub_Menu_Name>
         <Short_Name/>
         <is_Merge_VI>false</is_Merge_VI>
@@ -326,7 +227,7 @@ Key features of this library are:
           <Column>3</Column>
         </Position>
         <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Get Tag ValChange Event.vi</Path>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Get Tag ValChange Event.vi</Path>
         <VI_Title/>
       </Items_Data>
       <Items_Data>
@@ -399,7 +300,105 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Watchlist\Launch Tag Watchlist UI.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>CD903834ABD12EDDCB633F7DC9986E27</GUID>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Destruct.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>2</Row>
+          <Column>5</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Destruct.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Get Tag SetRequest Event.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>2</Row>
+          <Column>4</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Get Tag SetRequest Event.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Initialize.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>2</Row>
+          <Column>1</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Initialize.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>New Tag.vim</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>1</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\New Tag.vim</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Get Tag Value.vim</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>2</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Get Tag Value.vim</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Write Tag Value.vim</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>4</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Write Tag Value.vim</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Send Tag SetRequest.vim</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>5</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Send Tag SetRequest.vim</Path>
+        <VI_Title/>
+      </Items_Data>
+      <GUID>EAE670EB48FA06D920BE8990B2F0DE17</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -462,7 +461,21 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Tag Expr\Lookup Tag Values.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>076B43738B11332B28D2B4829A4B0EB8</GUID>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Destruct.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>4</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\Tag Expr\Destruct.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <GUID>1B3B239B970CB3B16B960A8B6D355FBD</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -553,7 +566,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Tools\Variant to String.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>46B947FB8FDD272A133680FC26122841</GUID>
+      <GUID>0F902B65FF9E9626511ABF7FE17EB566</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -577,62 +590,6 @@ Key features of this library are:
       <Items_Data>
         <Type>Item</Type>
         <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Get Tag.vi</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>1</Row>
-          <Column>1</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Get Tag.vi</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Get Tag Property.vim</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>1</Row>
-          <Column>2</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Get Tag Property.vim</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Set Tag Property.vim</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>1</Row>
-          <Column>3</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Set Tag Property.vim</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Get All Tags.vi</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>2</Row>
-          <Column>1</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Get All Tags.vi</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
         <NameSub_Menu_Name>Destruct Tag_By Ref.vi</NameSub_Menu_Name>
         <Short_Name/>
         <is_Merge_VI>false</is_Merge_VI>
@@ -641,7 +598,7 @@ Key features of this library are:
           <Column>4</Column>
         </Position>
         <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\Destruct Tag_By Ref.vi</Path>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Destruct Tag_By Ref.vi</Path>
         <VI_Title/>
       </Items_Data>
       <Items_Data>
@@ -658,7 +615,63 @@ Key features of this library are:
         <Path/>
         <VI_Title/>
       </Items_Data>
-      <GUID>6CB69A9321C5B339EFC4A5BEE49A676F</GUID>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Set Tag Property.vim</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>3</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Set Tag Property.vim</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Get Tag Property.vim</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>2</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Get Tag Property.vim</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Get Tag.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>1</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Get Tag.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Get All Tags.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>2</Row>
+          <Column>1</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Get All Tags.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <GUID>6452EF3D90F7D30F19568B167F59D0E2</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -690,7 +703,7 @@ Key features of this library are:
           <Column>1</Column>
         </Position>
         <Icon>00000000</Icon>
-        <Path>..\builds\Tag Engine\Source Distribution\Core\New Tag_From JSON Config.vi</Path>
+        <Path>..\builds\Tag Engine\Source Distribution\API\New Tag_From JSON Config.vi</Path>
         <VI_Title/>
       </Items_Data>
       <Items_Data>
@@ -721,7 +734,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Tools\Flatten Tags to JSON List.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>3D97B4933094A8303DBE4BD8408ABD7E</GUID>
+      <GUID>72061198B2879B7482717BE60245D1B2</GUID>
     </Functions_Palette_Data>
   </Library_Palette_Definition>
 </VI_Package_Builder_Settings>
