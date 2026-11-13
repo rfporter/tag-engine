@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2018" Created_Date="2020-05-19 15:57:16" Modified_Date="2025-08-02 03:51:25" Creator="leonidas" Comments="" ID="eead71a3c06fc23d7908f251e4c9b8be">
+<VI_Package_Builder_Settings Version="2018" Created_Date="2020-05-19 15:57:16" Modified_Date="2026-11-12 22:51:28" Creator="leonidas" Comments="" ID="12ba096ff0567e0d32fedd1c2b442277">
   <Library_General_Settings>
     <Package_File_Name>Tag_Engine</Package_File_Name>
-    <Library_Version>2.1.0.3</Library_Version>
+    <Library_Version>2.2.0.2</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>..\builds\Tag Engine\Source Distribution</Library_Source_Folder>
     <Library_Output_Folder>..\builds\Tag Engine</Library_Output_Folder>
@@ -43,15 +43,20 @@ Key features of this library are:
 - ValueChanged event is triggered on tag write value
 - SetRequest event allows request to change value without writing directly to the tag.
 - Tags are stored in Data Value References. The API can use either tag's name or the tag's data value reference wire.
-- Can store tag properties alongside the tag data. Standard properties are description, units, max value, min value.
+- Tag properties stored alongside the tag data. Standard properties are description, units, max value, min value.
+- Data staleness flag can be set per tag.
 - Tag names can be used in math expressions directly, using the provided Tag Expr library (extension of muParser for LabVIEW).
 - Malleable VIs are used to provide a convenient interface for reading and writing tags.
 - Tag configuration can be stored in JSON format.
-- Timestamp of last value change is stored alongside the tag data.</Description>
+- Timestamp of last value change is stored alongside the tag data.
+
+</Description>
       <Copyright>Copyright (c) 2023, Ryan Porter</Copyright>
       <Packager>Ryan Porter</Packager>
       <URL>https://github.com/rfporter/tag-engine/</URL>
-      <Release_Notes>- Restructure for PPL support.</Release_Notes>
+      <Release_Notes>- Add source string to Set Request event data. Can be used to indicate from where the Request is made.
+- Add lock list per tag. Used to block tag's Set Request events.
+- Change Tag Expression syntax (breaking change). Tag names must be wrapped in ${TAG_NAME} in order to be marked as tags instead of variables. This allows loosens restrictions an tag naming, allowing for "/" character as tag namespace delimiter.</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
@@ -131,7 +136,7 @@ Key features of this library are:
         <Namespace/>
       </Namespace_Overrides>
     </Source_Files>
-    <License_Agreement_Filepath/>
+    <License_Agreement_Filepath>..\builds\Tag Engine\Source Distribution\LICENSE</License_Agreement_Filepath>
     <Licensing_and_Activation>
       <License_LF_file_path/>
       <Licensed_library_file_path/>
@@ -398,7 +403,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\API\Send Tag SetRequest.vim</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>EAE670EB48FA06D920BE8990B2F0DE17</GUID>
+      <GUID>97DC61986B7ABB6A42F3255867711011</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -475,7 +480,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Tag Expr\Destruct.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>1B3B239B970CB3B16B960A8B6D355FBD</GUID>
+      <GUID>92238642510A0D5D4DB175AF2EE09E64</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -566,7 +571,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Tools\Variant to String.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>0F902B65FF9E9626511ABF7FE17EB566</GUID>
+      <GUID>04B1A42D4CA1D0967EEC9A3CD0BC360C</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -671,7 +676,35 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\API\Get All Tags.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>6452EF3D90F7D30F19568B167F59D0E2</GUID>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Set Tag Lock_ByRef.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>2</Row>
+          <Column>2</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Set Tag Lock_ByRef.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Release Tag Lock_ByRef.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>2</Row>
+          <Column>3</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\builds\Tag Engine\Source Distribution\API\Release Tag Lock_ByRef.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <GUID>E43A5ABA8CE188B495E3A40B31D993CD</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -734,7 +767,7 @@ Key features of this library are:
         <Path>..\builds\Tag Engine\Source Distribution\Tools\Flatten Tags to JSON List.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>72061198B2879B7482717BE60245D1B2</GUID>
+      <GUID>62F62AC7BB8350F034BF9BE70FBA8090</GUID>
     </Functions_Palette_Data>
   </Library_Palette_Definition>
 </VI_Package_Builder_Settings>

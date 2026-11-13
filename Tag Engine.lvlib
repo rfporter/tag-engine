@@ -11,6 +11,7 @@
 	<Item Name="SubVIs" Type="Folder">
 		<Item Name="Get Tag Value_ByRef.vi" Type="VI" URL="../API/Get Tag Value_ByRef.vi"/>
 		<Item Name="Send Tag SetRequest_ByRef.vi" Type="VI" URL="../API/Send Tag SetRequest_ByRef.vi"/>
+		<Item Name="Send Tag SetRequest_ByRef_LockBypass.vi" Type="VI" URL="../API/Send Tag SetRequest_ByRef_LockBypass.vi"/>
 		<Item Name="Write Tag Value_ByRef.vi" Type="VI" URL="../API/Write Tag Value_ByRef.vi"/>
 	</Item>
 	<Item Name="Tools" Type="Folder">
@@ -39,4 +40,6 @@
 	<Item Name="Write Tag Value.vim" Type="VI" URL="../API/Write Tag Value.vim"/>
 	<Item Name="Destruct Tag_By Ref.vi" Type="VI" URL="../API/Destruct Tag_By Ref.vi"/>
 	<Item Name="Destruct.vi" Type="VI" URL="../API/Destruct.vi"/>
+	<Item Name="Set Tag Lock_ByRef.vi" Type="VI" URL="../API/Set Tag Lock_ByRef.vi"/>
+	<Item Name="Release Tag Lock_ByRef.vi" Type="VI" URL="../API/Release Tag Lock_ByRef.vi"/>
 </Library>
