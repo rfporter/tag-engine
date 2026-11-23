@@ -1,26 +1,26 @@
 # Tag Engine for LabVIEW
 
-A SCADA-like tag variable engine for LabVIEW.
+Named, typed, event-driven tag variables for LabVIEW, like the tag database in a SCADA system.
 
-This library aims to provide a tag variable engine to LabVIEW, similar to what would be found in most SCADA application development environments.
+Tag Engine gives a LabVIEW application a central store of named variables, called **tags**, like the tag database in a SCADA system. Any part of the application can create, read, write or watch a tag by name, without passing wires or queues between loops.
 
-It is inspired by the [NI Current Value Table Toolkit](https://www.vipm.io/package/ni_lib_cvt/) and [GPower VI Register Toolkit](https://www.vipm.io/package/gpower_lib_viregister/).
+Each tag holds a value of any LabVIEW data type, a timestamp, and properties such as description, units and limits. It also has two events: **ValChange**, fired when the value changes, and **SetRequest**, which lets other code ask the tag's owner to change the value instead of writing it directly. Tags can be locked so that set requests are blocked under certain conditions.
 
-Like these toolkits, it provides global access to named variables (called tags).
+It was inspired by the [NI Current Value Table Toolkit](https://www.vipm.io/package/ni_lib_cvt/) and [GPower VI Register Toolkit](https://www.vipm.io/package/gpower_lib_viregister/), and adds events, properties, locking and JSON configuration.
 
-Key features of this library are:
+## Features
 
-* Tags can be programmatically created and destroyed.
-* Data values stored as variant so that all LabVIEW data types are supported.
-* ValueChanged event is triggered on tag write value
-* SetRequest event allows **request** to change value without writing directly to the tag.
-* Tags are stored in Data Value References. The API can use either tag's name or the tag's data value reference wire.
-* Tag properties stored alongside the tag data. Standard properties are description, units, max value, min value.
-* Data staleness flag can be set per tag.
-* Tag names can be used in math expressions directly, using the provided Tag Expr library (extension of muParser for LabVIEW).
-* Malleable VIs are used to provide a convenient interface for reading and writing tags.
-* Tag configuration can be stored in JSON format.
-* Timestamp of last value change is stored alongside the tag data.
+* **Any data type**: values are stored as variants. The type is fixed by the initial value, and malleable VIs read and write values in their native type.
+* **Access by name or reference**: look tags up by name (not case-sensitive), or keep the tag's reference for faster access.
+* **Namespaces**: group tags as `Namespace:Name`; the separator can be configured.
+* **Events**: ValChange on every write, with old and new values. SetRequest for requested changes, optionally synchronous with a timeout, and tagged with the requester's Source.
+* **Locking**: named locks block SetRequests (error 5611) until every lock is released, so requests can be refused under certain conditions. Direct writes are not affected.
+* **Properties**: description, units, min, max, default, format string and more, filled in automatically from the tag's data type. Custom properties can be added too.
+* **Staleness and timestamps**: every value carries the time of its last write and a Stale flag.
+* **JSON configuration**: save and restore tag definitions as JSON.
+* **Expressions**: use tags in math expressions with `${TAG_NAME}` syntax, through the Tag Expr library (built on muParser).
+* **Watchlist UI**: a ready-made window to watch and edit tag values at run time.
+* **PPL-ready**: the core (Tag Engine Core.lvlib) is kept separate so it can be built into a packed project library.
 
 This library is open source and licensed under BSD 2-Clause.
 
@@ -51,7 +51,7 @@ V2.0.3.1
 
 V2.0.4.4
 
-* Flattened VIMs to try to avoid build issuse.
+* Flattened VIMs to try to avoid build issues.
 
 V2.0.5.1
 
@@ -70,7 +70,7 @@ V2.2.0.1
 
 * Add source string to Set Request event data. Can be used to indicate from where the Request is made.
 * Add lock list per tag. Used to block tag's Set Request events.
-* Change Tag Expression syntax (breaking change). Tag names must be wrapped in ${TAG\_NAME} in order to be marked as tags instead of variables. This allows loosens restrictions an tag naming, allowing for "/" character as tag namespace delimiter.
+* Change Tag Expression syntax (breaking change). Tag names must be wrapped in ${TAG\_NAME} in order to be marked as tags instead of variables. This loosens restrictions on tag naming, allowing for "/" character as tag namespace delimiter.
 
 # Known Issues
 

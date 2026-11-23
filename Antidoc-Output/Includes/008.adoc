@@ -1,35 +1,149 @@
-== Asciidoc for LabVIEW(TM)
+== +++Tag Expr.lvclass+++
 
-Project website: https://wovalab.gitlab.io/open-source/asciidoc-toolkit/[Asciidoc toolkit] 
 
-Maintainer website: https://wovalab.com[Wovalab] 
+*Responsibility:*
+A math expression that can read Tag values. Extends the mupExpr class from the muParser library.
 
-BSD 3-Clause License
+Tags are referenced in the expression as ${TAG_NAME}, for example "${Tank1:Level} * 2 + offset". Tag names are not case-sensitive. Other variables and constants work as in mupExpr.
 
-Copyright (C) 2019, Wovalab,
-All rights reserved.
+Usage: Construct once (this finds every Tag and keeps its reference), call Tag Expr Eval as often as needed (each call reads the Tags' current values), then Destruct.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+Any mupExpr Eval VI can be used instead of Tag Expr Eval, as long as Lookup Tag Values is called first to read the current Tag values.
 
-* Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
+Tag values are converted to DBL for evaluation. See Lookup Tag Values for the supported types.
 
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
+*Version:* 1.0.0.3
 
-* Neither the name of the copyright holder nor the names of its
-  contributors may be used to endorse or promote products derived from
-  this software without specific prior written permission.
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+skinparam top to bottom direction
+class "Tag Expr" {
+{field} +TagVarNames : Array of String
+{field} -varNames : Array of String
+{field} -TagVarRefs : Array of NoType
+{field} -TagVarTypes : Array of Enum U8
+{field} -Expression_WithTags : String
+{static} {method} +exprparse()
+{static} {method} +Lookup Tag Values()
+{static} {method} +Tag Expr Eval()
+{method} +Construct()
+{method} +Destruct()
+
+}
+"mupExpr" <|-- "Tag Expr"
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4a,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|+++Read ExpressionWithTags+++
+
+|image::Tag Expr.lvclass-Read ExpressionWithTags.vi.png[Tag Expr.lvclass:Read ExpressionWithTags.vi]
+|Returns the expression as it was passed to Construct, with ${TAG_NAME} references. It does not return the placeholder version that is passed to muParser.
+|image::empty.png[empty.png]
+|image::reentrancy-shared.png[reentrancy-shared.png]
+|image::empty.png[empty.png]
+
+|+++Read TagVarNames+++
+
+|image::Tag Expr.lvclass-Read TagVarNames.vi.png[Tag Expr.lvclass:Read TagVarNames.vi]
+|Returns the names of the Tags used in the expression, as stored in each Tag.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Construct+++
+
+|image::Tag Expr.lvclass-Construct.vi.png[Tag Expr.lvclass:Construct.vi]
+|Creates a Tag Expr from an expression that can contain Tags, written as ${TAG_NAME}.
+
+Each ${...} is replaced with a placeholder variable (TAG00, TAG01, ...) before the expression is passed to muParser. The same Tag used more than once gets the same placeholder. Each Tag is looked up with Get Tag and its reference and data type are stored, so the Tags must exist before Construct is called. If a Tag is not found, the expression is destroyed and the error from Get Tag (5602) is returned.
+
+Variable Names returns the Tag names (in upper case), followed by any other variables in the expression.
+
+Optionally input a list of constant name-value pairs.
+
+Set "Use system decimal point" to true to use the system's decimal point. If it is a comma, the argument separator becomes a semicolon. The defaults are a period and a comma.
+
+Bulk Size sets the data-set size for bulk mode evaluation. Default is 1 (single result).
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Destruct+++
+
+|image::Tag Expr.lvclass-Destruct.vi.png[Tag Expr.lvclass:Destruct.vi]
+|Destroys the Tag Expr and releases the muParser handle and variable pointers. The Tags it uses are not affected.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++exprparse+++
+
+|image::Tag Expr.lvclass-exprparse.vi.png[Tag Expr.lvclass:exprparse.vi]
+|Finds every ${TAG_NAME} in the expression and replaces it with a placeholder variable name that muParser accepts (TAG00, TAG01, ...). The same Tag used more than once gets the same placeholder.
+
+Returns the modified expression, the unique Tag names (in upper case) and their placeholders, in matching order.
+
+Used by Construct.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Lookup Tag Values+++
+
+|image::Tag Expr.lvclass-Lookup Tag Values.vi.png[Tag Expr.lvclass:Lookup Tag Values.vi]
+|Reads the current value of every Tag in the expression and loads it into the matching expression variable, converted to DBL.
+
+Supported types:
+- Boolean (TRUE = 1, FALSE = 0)
+- Signed and unsigned integers, including unsigned enums
+- Floating point, including numbers with units, and fixed point
+- Timestamp (seconds since the LabVIEW epoch)
+- String, which must use a period as the decimal point
+
+A Tag of any other type returns error 5605 and stops the lookup. The expression should not be evaluated after an error.
+
+The data type of each Tag is read once, in Construct.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Tag Expr Eval+++
+
+|image::Tag Expr.lvclass-Tag Expr Eval.vi.png[Tag Expr.lvclass:Tag Expr Eval.vi]
+|Reads the Tags' current values (Lookup Tag Values) and evaluates the expression, returning a single result.
+
+Boolean Result is TRUE when Result is non-zero. It is FALSE when Result is 0 or NaN.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====

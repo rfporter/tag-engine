@@ -2,11 +2,27 @@
 <Project Type="Project" LVVersion="20008000">
 	<Property Name="CCSymbols" Type="Str"></Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">true</Property>
-	<Property Name="NI.Project.Description" Type="Str">The Tag Engine provides a simple API for sharing data across separate code modules.
+	<Property Name="NI.Project.Description" Type="Str">Tag Engine gives a LabVIEW application a central store of named variables, called tags, like the tag database in a SCADA system. Any part of the application can create, read, write or watch a tag by name, without passing wires or queues between loops.
 
-At its core, a Tag is just a variant value that can be looked up globally by name or by data value reference. However, this API provides additional functionality that helps to reduce code redundancy and avoid common pitfalls.
+Each tag holds a value of any LabVIEW data type, a timestamp, and properties such as description, units and limits. It also has two events: ValChange, fired when the value changes, and SetRequest, which lets other code ask the tag's owner to change the value instead of writing it directly. Tags can be locked so that set requests are blocked under certain conditions.
 
-The general rule for using the tag engine is that the module that creates a tag should be the only module that writes directly to the tag's value. Any other module must REQUEST to change the value of the tag by triggering the tag's SetRequest event. The tag's creator can listen for this event and decide how to handle the request.</Property>
+It was inspired by the NI Current Value Table and GPower VI Register toolkits, and adds events, properties, locking and JSON configuration.
+
+Features:
+
+- *Any data type*: values are stored as variants. The type is fixed by the initial value, and malleable VIs read and write values in their native type.
+- *Access by name or reference*: look tags up by name (not case-sensitive), or keep the tag's reference for faster access.
+- *Namespaces*: group tags as Namespace:Name; the separator can be configured.
+- *Events*: ValChange on every write, with old and new values. SetRequest for requested changes, optionally synchronous with a timeout, and tagged with the requester's Source.
+- *Locking*: named locks block SetRequests (error 5611) until every lock is released, so requests can be refused under certain conditions. Direct writes are not affected.
+- *Properties*: description, units, min, max, default, format string and more, filled in automatically from the tag's data type. Custom properties can be added too.
+- *Staleness and timestamps*: every value carries the time of its last write and a Stale flag.
+- *JSON configuration*: save and restore tag definitions as JSON.
+- *Expressions*: use tags in math expressions with ${TAG_NAME} syntax, through the Tag Expr library (built on muParser).
+- *Watchlist UI*: a ready-made window to watch and edit tag values at run time.
+- *PPL-ready*: the core (Tag Engine Core.lvlib) is kept separate so it can be built into a packed project library.
+
+include::../../THIRD-PARTY-NOTICES.adoc[leveloffset=+2]</Property>
 	<Item Name="My Computer" Type="My Computer">
 		<Property Name="NI.SortType" Type="Int">3</Property>
 		<Property Name="server.app.propertiesEnabled" Type="Bool">true</Property>
@@ -35,6 +51,7 @@ The general rule for using the tag engine is that the module that creates a tag 
 		<Item Name="Tag Engine.vipb" Type="Document" URL="../Tag Engine.vipb"/>
 		<Item Name="LICENSE" Type="Document" URL="../LICENSE"/>
 		<Item Name="README.md" Type="Document" URL="../README.md"/>
+		<Item Name="THIRD-PARTY-NOTICES.adoc" Type="Document" URL="../THIRD-PARTY-NOTICES.adoc"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Error Cluster From Error Code.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi"/>
@@ -172,6 +189,7 @@ The general rule for using the tag engine is that the module that creates a tag 
 				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/Source Distribution</Property>
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{8E3AE997-530C-44B7-967D-B0854E552052}</Property>
+				<Property Name="Bld_version.build" Type="Int">2</Property>
 				<Property Name="Bld_version.major" Type="Int">2</Property>
 				<Property Name="Bld_version.minor" Type="Int">2</Property>
 				<Property Name="Destination[0].destName" Type="Str">Destination Directory</Property>
@@ -180,7 +198,7 @@ The general rule for using the tag engine is that the module that creates a tag 
 				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
 				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/Source Distribution/data</Property>
 				<Property Name="DestinationCount" Type="Int">2</Property>
-				<Property Name="Source[0].itemID" Type="Str">{01D5B8C9-3CE6-4A66-BA0A-69842E705D90}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{7EA3BBAD-18B3-4754-8E9F-7A9AA58DFD99}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[1].itemID" Type="Ref">/My Computer/Tag Engine.lvlib</Property>
@@ -207,7 +225,10 @@ The general rule for using the tag engine is that the module that creates a tag 
 				<Property Name="Source[6].Library.allowMissingMembers" Type="Bool">true</Property>
 				<Property Name="Source[6].sourceInclusion" Type="Str">Include</Property>
 				<Property Name="Source[6].type" Type="Str">Library</Property>
-				<Property Name="SourceCount" Type="Int">7</Property>
+				<Property Name="Source[7].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[7].itemID" Type="Ref">/My Computer/THIRD-PARTY-NOTICES.adoc</Property>
+				<Property Name="Source[7].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="SourceCount" Type="Int">8</Property>
 			</Item>
 		</Item>
 	</Item>

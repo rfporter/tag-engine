@@ -1,104 +1,361 @@
-== Tag Watchlist.lvlib
+== +++Tag Engine.lvlib+++
+
 
 *Responsibility:*
-+++The tag watchlist library contains the Tag Watchlist UI and supporting subVIs.+++
-
+The Tag Engine API: VIs for creating, finding, reading, writing and destroying Tags, plus tools for building Tags from JSON configuration. Built on Tag Engine Core.lvlib, which holds the Tag class and the shared Tag registry.
 
 *Version:* 1.0.0.0
 
+=== Functions
+
 .Functions (non private scope only)
-[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+[cols="<.<4a,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
 |===
 |Name |Connector pane |Description |S. |R. |I.
 
-|Timestamp to String
-|image:Tag_Watchlist.lvlib_Timestamp_to_String.vi.png[Tag Watchlist.lvlib:Timestamp to String.vi]
-|No description found (add content in vi description)
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+|+++Get Tag Value_ByRef+++
 
-|Tag_Value_Entry_PopUp
-|image:Tag_Watchlist.lvlib_Tag_Value_Entry_PopUp.vi.png[Tag Watchlist.lvlib:Tag_Value_Entry_PopUp.vi]
-|+++Tag value entrry pop-up. By specifying a Tag Name, the tag's value is looked up and the appropriately typed popup is launched.+++
+|image::Tag Engine.lvlib-Get Tag Value_ByRef.vi.png[Tag Engine.lvlib:Get Tag Value_ByRef.vi]
+|Returns the current value and timestamp of the Tag given by reference. The value is returned as a variant.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
 
-+++Select either SetRequest or WriteValue for Write Type. Write value should be for debugging and testing purposes only. Set Request send the value by Set Request event instead of writing directly to the Tag's value.+++
+|+++Send Tag SetRequest_ByRef+++
 
-+++Supported Types are:+++
-+++- Boolean+++
-+++- Signed Integer+++
-+++- Unsigned Integer+++
-+++- Floating Point+++
-+++- String+++
+|image::Tag Engine.lvlib-Send Tag SetRequest_ByRef.vi.png[Tag Engine.lvlib:Send Tag SetRequest_ByRef.vi]
+|Sends a SetRequest to the Tag given by reference.
 
-+++Any other type will launch the string value entry popup with the JSON representation of the value. BE CAREFUL.+++
+If the Tag is locked, the request is not sent, locked? is TRUE and error 5611 is returned.
 
+If Synchronous is TRUE, waits up to Timeout ms for the owner to confirm; timed out? reports a timeout without an error.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
 
+|+++Send Tag SetRequest_ByRef_LockBypass+++
 
+|image::Tag Engine.lvlib-Send Tag SetRequest_ByRef_LockBypass.vi.png[Tag Engine.lvlib:Send Tag SetRequest_ByRef_LockBypass.vi]
+|Same as Send Tag SetRequest_ByRef, but ignores locks: the SetRequest is sent even if the Tag is locked.
 
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+Intended for code that needs to set a locked Tag, such as the lock owner.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
 
-|Value Entry_BOOL
-|image:Tag_Watchlist.lvlib_Value_Entry_BOOL.vi.png[Tag Watchlist.lvlib:Value Entry_BOOL.vi]
-|+++Boolean value pop-up window. Use spacebar to toggle the value.+++
+|+++Write Tag Value_ByRef+++
 
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+|image::Tag Engine.lvlib-Write Tag Value_ByRef.vi.png[Tag Engine.lvlib:Write Tag Value_ByRef.vi]
+|Writes a value to the Tag given by reference. Timestamp defaults to now. If IgnoreIfEqual is TRUE, the write is skipped when the value is unchanged. Fires the Tag's ValChange event if it is enabled.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
 
-|Value Entry_DBL
-|image:Tag_Watchlist.lvlib_Value_Entry_DBL.vi.png[Tag Watchlist.lvlib:Value Entry_DBL.vi]
-|+++DBL value entry Pop-up window.+++
+|+++Array of VData to VCluster_openG+++
 
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+|image::Tag Engine.lvlib-Array of VData to VCluster_openG.vi.png[Tag Engine.lvlib:Array of VData to VCluster_openG.vi]
+|Helper adapted from OpenG: builds a cluster (as a variant) from an array of variants, one element per cluster field. Used by the Init ... Cluster VIs.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
 
-|Value Entry_I32
-|image:Tag_Watchlist.lvlib_Value_Entry_I32.vi.png[Tag Watchlist.lvlib:Value Entry_I32.vi]
-|+++I32 value entry pop-up window.+++
+|+++Build Tags from JSON List+++
 
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+|image::Tag Engine.lvlib-Build Tags from JSON List.vi.png[Tag Engine.lvlib:Build Tags from JSON List.vi]
+|Build multiple Tags from a JSON array of Tag configurations.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
 
-|Value Entry_STR
-|image:Tag_Watchlist.lvlib_Value_Entry_STR.vi.png[Tag Watchlist.lvlib:Value Entry_STR.vi]
-|+++String value entry pop-up window.+++
+|+++Flatten Tags to JSON List+++
 
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+|image::Tag Engine.lvlib-Flatten Tags to JSON List.vi.png[Tag Engine.lvlib:Flatten Tags to JSON List.vi]
+|Create a JSON array of Tag configurations from a list of Tags.
 
-|Value Entry_U32
-|image:Tag_Watchlist.lvlib_Value_Entry_U32.vi.png[Tag Watchlist.lvlib:Value Entry_U32.vi]
-|+++U32 value entry pop-up window.+++
+If the input list of Tag Names is empty, all Tags will be used to generate the JSON array.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
 
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+|+++Init SetRequest Events Cluster+++
 
-|Launch Tag Watchlist UI
-|image:Tag_Watchlist.lvlib_Launch_Tag_Watchlist_UI.vi.png[Tag Watchlist.lvlib:Launch Tag Watchlist UI.vi]
-|+++Tag watchlist launcher. Allows non-blocking launch of Tag Watchlist window (fire and forget), while allowing only one instance to be running.+++
+|image::Tag Engine.lvlib-Init SetRequest Events Cluster.vim.png[Tag Engine.lvlib:Init SetRequest Events Cluster.vim]
+|Input a cluster of SetRequest events with labels corresponding to the
+desired Tag Names.
 
-+++The input Shutdown Event should be used to shutdown the Tag Watchlist window in the event of main application shutdown.+++
+Optionally the specified namespace can be prepended to the cluster labels to
+form the Tag Names.
 
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+Output is the same cluster, but with event references populated with Tag's
+event references
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
 
-|Tag Watchlist UI
-|image:Tag_Watchlist.lvlib_Tag_Watchlist_UI.vi.png[Tag Watchlist.lvlib:Tag Watchlist UI.vi]
-|+++Tag Watchlist window can view and modify any existing Tag.+++
+|+++Init Tag Ref Cluster+++
 
-+++Use the Watchlist launcher to run this VI in your application.+++
+|image::Tag Engine.lvlib-Init Tag Ref Cluster.vim.png[Tag Engine.lvlib:Init Tag Ref Cluster.vim]
+|Input a cluster of Tag references with labels corresponding to the
+desired Tag Name.
 
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+Optionally the specified namespace can be prepended to the cluster labels to
+form the Tag Name.
+
+Output is the same cluster, but with Tag references populated with Tag's
+actual reference.
+
+All Found? is FALSE if any tag in the cluster was not found.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Init ValChange Events Cluster+++
+
+|image::Tag Engine.lvlib-Init ValChange Events Cluster.vim.png[Tag Engine.lvlib:Init ValChange Events Cluster.vim]
+|Input a cluster of ValueChange events with labels corresponding to the
+desired Tag Name.
+
+Optionally the specified namespace can be prepended to the cluster labels to
+form the Tag Name.
+
+Output is the same cluster, but with event references populated with Tag's
+ValChange event references.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Variant to DBL+++
+
+|image::Tag Engine.lvlib-Variant to DBL.vi.png[Tag Engine.lvlib:Variant to DBL.vi]
+|Attempt to convert a variant value to Double precision floating point.
+
+This might work for the following types:
+- Boolean: T=1.0, F=0.0
+- Unsigned Integer: U8..U64, Enum U8..U64
+- Signed Integer: I8..I64
+- Floating Point: SGL, DBL, EXT
+- String: Assuming Frac/Expr string using dot decimal place.
+- Timestamp: Converts to time in seconds.
+
+Unsupported types will return NaN for the value, without producing an error.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Variant to String+++
+
+|image::Tag Engine.lvlib-Variant to String.vi.png[Tag Engine.lvlib:Variant to String.vi]
+|Attempt to represent the input variant value as a string.
+
+This VI just calls "Variant to JSON Text.vi"
+
+Returned strings are in JSON-compatible value format.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Initialize+++
+
+|image::Tag Engine.lvlib-Initialize.vi.png[Tag Engine.lvlib:Initialize.vi]
+|Initialize the Tag store.
+
+Call this VI at the startup of your main process (that does not leave memory until your application is stopped). The Tag store will be owned by this process.
+
+Namespace Delimiter sets the separator used between namespace and tag name (default ':').
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Get All Tags+++
+
+|image::Tag Engine.lvlib-Get All Tags.vi.png[Tag Engine.lvlib:Get All Tags.vi]
+|Return a list of all Tag Names and references.
+
+Optionally specify a filter. Only matched Tag names will be returned. Standard "Match Pattern" syntax applies. Match is not case sensitive.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Get Tag Property+++
+
+|image::Tag Engine.lvlib-Get Tag Property.vim.png[Tag Engine.lvlib:Get Tag Property.vim]
+|Read a Tag's property.
+
+If the property does not exist, Found? is FALSE and error 5602 is returned.
+
+Wire Default with the expected data type to get the value converted to that type (Default is returned if the conversion fails). With a variant Default, the property's variant value is returned unchanged.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Get Tag SetRequest Event+++
+
+|image::Tag Engine.lvlib-Get Tag SetRequest Event.vi.png[Tag Engine.lvlib:Get Tag SetRequest Event.vi]
+|Lookup a Tag's set request event.
+
+If the tag is not found, error 5602 is returned.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Get Tag ValChange Event+++
+
+|image::Tag Engine.lvlib-Get Tag ValChange Event.vi.png[Tag Engine.lvlib:Get Tag ValChange Event.vi]
+|Lookup a Tag's value change event.
+
+If the tag is not found, error 5602 is returned.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Get Tag+++
+
+|image::Tag Engine.lvlib-Get Tag.vi.png[Tag Engine.lvlib:Get Tag.vi]
+|Lookup the reference of a Tag.
+
+Optionally specify a namespace, which is prepended to the tag name using the namespace delimiter (':' by default, set by Initialize).
+
+If the tag is not found, the found output is false and Error 5602 is returned.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Get Tag Value+++
+
+|image::Tag Engine.lvlib-Get Tag Value.vim.png[Tag Engine.lvlib:Get Tag Value.vim]
+|Get a Tag's (or a list of tags) current value(s) and timestamp(s).
+
+The Tag Name(s)/Ref(s) input can be either the Tag Name, an array of Tag Names, a Tag Reference, or an array of Tag References.
+
+Optionally specify a namespace, which is prepended to the tag name(s) using the namespace delimiter (':' by default, set by Initialize).
+
+If a tag is not found, the default value is returned along with Error 5602. The Default input defines the expected data type of the value, as well as the default value returned in case of error. If no default value is specified, the value is returned as a variant.
+
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++New Tag+++
+
+|image::Tag Engine.lvlib-New Tag.vim.png[Tag Engine.lvlib:New Tag.vim]
+|Create a new Tag
+
+The Tag Name, including the optional namespace, can be used for item lookup operations after creation. Namespace separator is a colon (by default).
+Max length 256 characters. Valid characters are: a-z A-Z 0-9 : _ / . -
+Although names are stored in original case, lookups are not case sensitive.
+
+Optional namespace to be prepended to the Tag name (separated by a colon). Do not specify a namespace if the full tag name had been specified by the Tag Name input.
+
+Set init as stale to true to indicate that no real measurement has occurred since the tag was created. Default value is false.
+
+Units of measure for numeric-type tags.
+
+Optional description of the tag can be specified.
+
+Initial value for the Tag also defines the Tag's datatype.
+
+Error 5601 is returned if the Tag Name already exists.
+Error 5609 is returned if the Tag Name contained an illegal character.
+Error 5610 is returned if the Tag Name contains more than 256 characters.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++New Tag_From JSON Config+++
+
+|image::Tag Engine.lvlib-New Tag_From JSON Config.vi.png[Tag Engine.lvlib:New Tag_From JSON Config.vi]
+|Build a new Tag from a JSON config string.
+
+The JSON config string must at least specify the Name, Type, Typestring, and initial value property.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::empty.png[empty.png]
+
+|+++Send Tag SetRequest+++
+
+|image::Tag Engine.lvlib-Send Tag SetRequest.vim.png[Tag Engine.lvlib:Send Tag SetRequest.vim]
+|Trigger a set value request event on the specified Tag.
+
+Specify either the Tag name or Tag reference, or a list of Tag names or references.
+
+Optionally specify a namespace to prepend to the Tag name(s).
+
+Specify the requested set value (or list of values for multiple Tags)
+
+Set synchronous to true to wait (up to the timeout) for a response from the Tag's event handler that the request has been completed. With a timeout of -1, the set request will wait indefinitely. If the request times out, timeout is set to true but NO ERROR IS RETURNED.
+
+Set synchronous to false, will trigger the event and move on without waiting for confirmation of completion.
+
+If the Tag is locked, the request is not sent, locked? is TRUE and error 5611 is returned. Source identifies the requester in that message.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Set Tag Property+++
+
+|image::Tag Engine.lvlib-Set Tag Property.vim.png[Tag Engine.lvlib:Set Tag Property.vim]
+|Set a Tag's property.
+
+If the property doesn't exist, it will be created. Otherwise the value will be replaced.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write Tag Value+++
+
+|image::Tag Engine.lvlib-Write Tag Value.vim.png[Tag Engine.lvlib:Write Tag Value.vim]
+|Write a value to the specified Tag.
+
+Specify either the Tag name or Tag reference, or a list of Tag names or references.
+
+Specify the value to write (or list of values for multiple Tags)
+
+Optionally specify a namespace to prepend to the Tag name(s).
+
+Optionally specify the timestamp associated with the new value (default = now)
+
+Optionally specify IgnoreIfEqual. Set to true to skip the write if the new value equals the Tag's current value. Default is false.
+
+Note: locks only block SetRequests; direct writes are always applied.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Destruct Tag_By Ref+++
+
+|image::Tag Engine.lvlib-Destruct Tag_By Ref.vi.png[Tag Engine.lvlib:Destruct Tag_By Ref.vi]
+|Destruct a single Tag by reference.
+
+No error is returned if the tag is not found. deleted is TRUE if the Tag was in the registry. The Tag is destroyed either way.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::empty.png[empty.png]
+
+|+++Destruct+++
+
+|image::Tag Engine.lvlib-Destruct.vi.png[Tag Engine.lvlib:Destruct.vi]
+|Destroy every Tag and then the Tag store.
+
+Call once at shutdown; the Tag Engine can't be used again until LabVIEW unloads it.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Set Tag Lock_ByRef+++
+
+|image::Tag Engine.lvlib-Set Tag Lock_ByRef.vi.png[Tag Engine.lvlib:Set Tag Lock_ByRef.vi]
+|Adds the lock LockName to the Tag given by reference. While any lock is held, SetRequests are blocked (error 5611). Direct writes are not affected.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Release Tag Lock_ByRef+++
+
+|image::Tag Engine.lvlib-Release Tag Lock_ByRef.vi.png[Tag Engine.lvlib:Release Tag Lock_ByRef.vi]
+|Removes the lock LockName from the Tag given by reference. The Tag is unlocked when no locks remain.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
 |===
 
 **S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
@@ -106,3 +363,10 @@
 **R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
 
 **I**nlining: image:inlined.png[] -> Inlined
+
+=== Library Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====

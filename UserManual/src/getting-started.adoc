@@ -1,0 +1,22 @@
+== Getting Started
+
+A typical application uses {product} like this:
+
+. *Start up.* The main process calls *Initialize*. If your tag names use a namespace delimiter
+  other than `:`, set it here.
+. *Create tags.* Each module creates the tags it owns with *New Tag*, giving each a name, an
+  initial value (which sets the data type) and, optionally, units and a description.
+. *Handle set requests.* Each owner gets its tags' SetRequest events with *Get Tag SetRequest
+  Event* and registers for them in its Event Structure. When a request arrives, it checks the
+  value, acts on it, and writes the new value with *Write Tag Value*.
+. *Publish values.* Owners write new values with *Write Tag Value*, for example after each
+  measurement.
+. *Use the values elsewhere.* Other modules read values with *Get Tag Value*, react to changes by
+  registering for *Get Tag ValChange Event*, and ask for changes with *Send Tag SetRequest*.
+. *Shut down.* When the application stops, the main process calls *Destruct*.
+
+TIP: Look up the references once with Get Tag, or with Init Tag Ref Cluster for a whole cluster,
+and use them in loops instead of names.
+
+TIP: During development, call *Launch Tag Watchlist UI* to watch and change tag values while the
+application runs.

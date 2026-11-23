@@ -1,0 +1,26 @@
+= Tag Engine User Manual
+Ryan Porter
+:doctype: book
+:toc:
+:toclevels: 2
+:sectnums:
+:sectnumlevels: 2
+:imagesdir: images
+:experimental:
+:product: Tag Engine
+
+// Hand-written chapters live in UserManual/src. palette-reference.adoc and
+// THIRD-PARTY-NOTICES.adoc are added by UserManual/build-manual.pl.
+
+include::introduction.adoc[]
+
+include::concepts.adoc[]
+
+include::getting-started.adoc[]
+
+include::palette-reference.adoc[]
+
+[appendix]
+== Third-Party Notices
+
+include::THIRD-PARTY-NOTICES.adoc[lines=2..-1,leveloffset=+1]

@@ -1,259 +1,39 @@
-== Tag Core.lvclass
+== +++Tag Engine Core.lvlib+++
+
 
 *Responsibility:*
-+++Tag engine core holds the lookup table of all tags. It also defines the public API for interacting with tags.+++
+The core of the Tag Engine: the Tag class and the shared Tag registry, kept in their own library so they can be built into a packed project library (PPL).
 
+- **Tag.lvclass**: a named, typed value with a timestamp, standard properties, change and set-request events, and named locks.
+- **Tag Core.lvclass**: the single registry of all Tags, which hands them out by name as data value references.
+- **Types**: the data carried by the ValChange and SetRequest events.
+
+Applications normally use the VIs in Tag Engine.lvlib rather than calling this library directly.
 
 *Version:* 1.0.0.0
 
-[plantuml, format="svg", align="center"]
-....
-@startuml
-set namespaceSeparator :
-skinparam ClassBackgroundColor #FFFFFF
-skinparam ClassBorderColor #555555
-skinparam ClassFontColor #000000
-skinparam ClassHeaderBackgroundColor #808080
-
-skinparam top to bottom direction
-class "Tag Engine.lvlib:Tag Core" {
-{field} -Tag LUT : Variant
-{static} {method} -Add Tag()
-{static} {method} -Get Tag LUT()
-{static} {method} +Get Tag Value_ByRef()
-{static} {method} +Send Tag SetRequest_ByRef()
-{static} {method} +Destruct Tag_By Ref()
-{static} {method} +Get All Tags()
-{static} {method} +Get Tag()
-{static} {method} +Get Tag Property()
-{static} {method} +Get Tag SetRequest Event()
-{static} {method} +Get Tag ValChange Event()
-{static} {method} +Get Tag Value()
-{static} {method} +New Tag()
-{static} {method} +New Tag_From JSON Config()
-{static} {method} +Send Tag SetRequest()
-{static} {method} +Set Tag Property()
-{static} {method} +Initialize()
-{static} {method} +Destruct()
-
-}
-
-
-
-@enduml
-....
-
-.Functions (non private scope only)
-[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+.Nested libraries
+[cols="", %autowidth, frame=all, grid=all, stripes=none]
 |===
-|Name |Connector pane |Description |S. |R. |I.
+|Name |Type
 
-|Get Tag Value_ByRef
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag_Value_ByRef.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag Value_ByRef.vim]
-|No description found (add content in vi description)
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
+|<<Tag Core.lvclass>>
+|LVClass
 
-|Send Tag SetRequest_ByRef
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Send_Tag_SetRequest_ByRef.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Send Tag SetRequest_ByRef.vim]
-|No description found (add content in vi description)
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Write Tag Value_ByRef
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Write_Tag_Value_ByRef.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Write Tag Value_ByRef.vim]
-|No description found (add content in vi description)
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Destruct Tag_By Ref
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Destruct_Tag_By_Ref.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Destruct Tag_By Ref.vi]
-|+++Destruct a single CVT item by reference.+++
-
-+++No error is returned if the tag is not found.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:empty.png[empty.png]
-
-|Get All Tags
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_All_Tags.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Get All Tags.vi]
-|+++Return a list of all Tag Names and references.+++
-
-+++Optionally specify a filter. Only matched Tag names will be returned. Standard "Match Pattern" syntax applies. Match is not case sensitive.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Get Tag
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag.vi]
-|+++Lookup the reference of a Tag.+++
-
-+++Optionally specify a namespace, which is prepended to the tag name (colon separator).+++
-
-+++If the tag is not found, the found output is false and Error 5602 is returned.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Get Tag Property
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag_Property.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag Property.vim]
-|+++Read a Tag's property.+++
-
-+++If the property does not exist, error 5602 is returned.+++
-
-+++Specify relaxed type along with a DBL or String default value to attempt to coerce the returned type to string or DBL.+++
-
-+++Specify a variant default value to return the property's variant value (untouched)+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Get Tag SetRequest Event
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag_SetRequest_Event.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag SetRequest Event.vi]
-|+++Lookup a Tag's set request event.+++
-
-+++If the tag is not found, error 5602 is returned.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Get Tag ValChange Event
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag_ValChange_Event.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag ValChange Event.vi]
-|+++Lookup a Tag's value change event.+++
-
-+++If the CVT item is not found, error 5602 is returned.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Get Tag Value
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Get_Tag_Value.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Get Tag Value.vim]
-|+++Get a Tag's (or a list of tags) current value(s) and timestamp(s).+++
-
-+++The Tag Name(s)/Ref(s) input can be either the Tag Name, an array of Tag Names, a Tag Reference, or an array of Tag References.+++
-
-+++Optionally specify a namespace, which is prepended to the tag name(s), using colon as separator.+++
-
-+++If a tag is not found, the default value is returned along with Error 5602.+++
-
-+++The Default input defines the expected data type of the value, as well as the default value returned in case of error. If no default value is specified, the value is returned as a variant.+++
-
-+++Specify relaxed type along with a DBL or String default value to attempt to coerce the returned type to string or DBL.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|New Tag
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_New_Tag.vim.png[Tag Engine.lvlib:Tag Core.lvclass:New Tag.vim]
-|+++Create a new Tag+++
-
-+++The Tag Name, including the optional namespace, can be used for item lookup operations after creation. Namespace separator is a colon.+++
-+++Max length 256 characters. Valid characters are: a-z A-Z 0-9 : _+++
-+++Although names are stored in original case, lookups are not case sensitive.+++
-
-+++Optional namespace to be prepended to the Tag name (separated by a colon). Do not specify a namespace if the full tag name had been specified by the Tag Name input.+++
-
-+++Set init as stale to true to indicate that no real measurement has occured since the tag was created. Default value is false.+++
-
-+++Units of measure for numeric-type tags.+++
-
-+++Optional description of the tag can be specified.+++
-
-+++Initial value for the Tag also defines the Tag's datatype.+++
-
-+++Error 5601 is returned if the Tag Name already exists.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|New Tag_From JSON Config
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_New_Tag_From_JSON_Config.vi.png[Tag Engine.lvlib:Tag Core.lvclass:New Tag_From JSON Config.vi]
-|+++Build a new Tag from a JSON config string.+++
-
-+++The JSON config string must at least specify the Name, Type, Typestring, and initial value property.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:empty.png[empty.png]
-
-|Send Tag SetRequest
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Send_Tag_SetRequest.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Send Tag SetRequest.vim]
-|+++Trigger a set value request event on the specified Tag.+++
-
-+++Specify either the Tag name or Tag reference, or a list of Tag names or references.+++
-
-+++Optionally specify a namespace to prepend to the Tag name(s).+++
-
-+++Specify the requested set value (or list of values for multiple Tags)+++
-
-+++Set synchronous to true to wait (up to the timeout) for a response from the Tag's event handler that the request has been completed. With a timeout of -1, the set request will wait indefinitely. If the request times out, timeout is set to true but NO ERROR IS RETURNED.+++
-
-+++Set synchronous to false, will trigger the event and move on without waiting for confirmation of completion.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Set Tag Property
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Set_Tag_Property.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Set Tag Property.vim]
-|+++Set a Tag's property.+++
-
-+++If the property doesn't exist, it will be created. Otherwise the value will be replaced.+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Write Tag Value
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Write_Tag_Value.vim.png[Tag Engine.lvlib:Tag Core.lvclass:Write Tag Value.vim]
-|+++Write the value of the specified Tag(s).+++
-
-+++Specify either the Tag name, Tag reference, or a list of Tag names or references.+++
-
-+++Optionally specify a namespace to prepend to the Tag name(s).+++
-
-+++Specify the requested set value (or list of values for multiple Tags)+++
-
-+++Specify a timestamp to associate with the value, otherwise a new one is created (now).+++
-
-+++Set IgnoreIfEqual to true will ignore the new value if it is equal to the current value (a ValChange event will not be triggered and timestamp will not be updated).+++
-
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
-
-|Initialize
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Initialize.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Initialize.vi]
-|+++Initialize the Tag store.+++
-
-+++Call this VI at the startup of your main process (that does not leave memory until your application is stopped). The Tag store will be owned by this process.+++
-
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-
-|Destruct
-|image:Tag_Engine.lvlib_Tag_Core.lvclass_Destruct.vi.png[Tag Engine.lvlib:Tag Core.lvclass:Destruct.vi]
-|+++Destroy every Tag and then the Tag store+++
-
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+|<<Tag.lvclass>>
+|LVClass
 |===
 
-**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+=== Functions
 
-**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+[NOTE]
+====
+No functions found
+====
 
-**I**nlining: image:inlined.png[] -> Inlined
+=== Library Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====

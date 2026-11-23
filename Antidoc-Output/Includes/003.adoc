@@ -1,91 +1,138 @@
-== Classes overview
+== +++Tag Watchlist.lvlib+++
 
-This project contains 3 classes and 0 interface.
 
-.Classes list
-[cols="<.<1d,<.<1d", %autowidth, frame=all, grid=all, stripes=none]
+*Responsibility:*
+A window for watching and changing Tag values while an application runs, for debugging and commissioning.
+
+Call Launch Tag Watchlist UI to open the window without blocking the caller. The other VIs are the window itself and its pop-ups.
+
+*Version:* 1.0.0.0
+
+=== Functions
+
+.Functions (non private scope only)
+[cols="<.<4a,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
 |===
-|Classes |Interfaces
+|Name |Connector pane |Description |S. |R. |I.
 
-|<<Tag Core.lvclass>>
-|
+|+++Timestamp to String+++
 
-|<<Tag.lvclass>>
-|
+|image::Tag Watchlist.lvlib-Timestamp to String.vi.png[Tag Watchlist.lvlib:Timestamp to String.vi]
+|Formats a timestamp as local time: "YYYY-MM-DD HH:MM:SS", or "HH:MM:SS" when Include Date? is FALSE. Precision adds that many digits of fractional seconds.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
 
-|<<Tag Expr.lvclass>>
-|
+|+++Tag_Value_Entry_PopUp+++
+
+|image::Tag Watchlist.lvlib-Tag_Value_Entry_PopUp.vi.png[Tag Watchlist.lvlib:Tag_Value_Entry_PopUp.vi]
+|Looks up a Tag by name and opens a value-entry pop-up that matches its type:
+- Boolean: Value Entry_BOOL
+- DBL and SGL: Value Entry_DBL
+- I8, I16, I32: Value Entry_I32
+- U8, U16, U32: Value Entry_U32
+- String: Value Entry_STR
+- Any other type: Value Entry_STR, editing the value as JSON
+
+The entered value is converted back to the Tag's own type. Take care with JSON: invalid text returns an error.
+
+If the user clicks OK, Apply is TRUE and the value is sent according to Write Type:
+- SetRequest (default): sends a SetRequest. Synchronous and Timeout apply to it.
+- WriteValue: writes the value directly. Use it for testing only.
+
+If the Tag is not found, found is FALSE and the error from Get Tag is returned.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Value Entry_BOOL+++
+
+|image::Tag Watchlist.lvlib-Value Entry_BOOL.vi.png[Tag Watchlist.lvlib:Value Entry_BOOL.vi]
+|Pop-up for entering a Boolean value. Space toggles the value. OK returns the value with Apply TRUE. Cancel or closing the window returns Apply FALSE.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Value Entry_DBL+++
+
+|image::Tag Watchlist.lvlib-Value Entry_DBL.vi.png[Tag Watchlist.lvlib:Value Entry_DBL.vi]
+|Pop-up for entering a DBL value. OK returns the value with Apply TRUE. Cancel or closing the window returns Apply FALSE.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Value Entry_I32+++
+
+|image::Tag Watchlist.lvlib-Value Entry_I32.vi.png[Tag Watchlist.lvlib:Value Entry_I32.vi]
+|Pop-up for entering an I32 value. OK returns the value with Apply TRUE. Cancel or closing the window returns Apply FALSE.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Value Entry_STR+++
+
+|image::Tag Watchlist.lvlib-Value Entry_STR.vi.png[Tag Watchlist.lvlib:Value Entry_STR.vi]
+|Pop-up for entering a string value. OK returns the value with Apply TRUE. Cancel or closing the window returns Apply FALSE.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Value Entry_U32+++
+
+|image::Tag Watchlist.lvlib-Value Entry_U32.vi.png[Tag Watchlist.lvlib:Value Entry_U32.vi]
+|Pop-up for entering a U32 value. OK returns the value with Apply TRUE. Cancel or closing the window returns Apply FALSE.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Launch Tag Watchlist UI+++
+
+|image::Tag Watchlist.lvlib-Launch Tag Watchlist UI.vi.png[Tag Watchlist.lvlib:Launch Tag Watchlist UI.vi]
+|Opens the Tag Watchlist window without waiting for it to close (call and forget). Only one window can be open: if it is already running, this VI does nothing.
+
+Shutdown Event closes the window. Generate it when the application shuts down.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Tag Watchlist UI+++
+
+|image::Tag Watchlist.lvlib-Tag Watchlist UI.vi.png[Tag Watchlist.lvlib:Tag Watchlist UI.vi]
+|The Tag Watchlist window. Use Launch Tag Watchlist UI to open it.
+
+The left list shows every Tag that existed when the window opened. Type in Filter to show only matching names; the filter is not case-sensitive and uses Match Pattern syntax. Double-click a Tag, or right-click and choose Add to Watch, to add it to the watchlist.
+
+The watchlist updates every 200 ms with each Tag's value, the time of its last change, units, description and Stale flag. Double-click a row to send a SetRequest. Right-click a row to:
+- send a SetRequest (Request Value Change),
+- write the value directly (Force Value Change; for testing only),
+- show the Tag's details,
+- remove it from the watchlist.
+
+The window closes on its own close button or when Shutdown Event is generated.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Tag_Details_PopUp+++
+
+|image::Tag Watchlist.lvlib-Tag_Details_PopUp.vi.png[Tag Watchlist.lvlib:Tag_Details_PopUp.vi]
+|Shows the details of one Tag: name, value, timestamp, time since the last change, data type and Stale flag. These update as the value changes.
+
+Pick a property from the Property list to see its value. TypeString shows the Tag's type descriptor.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
 |===
 
-[plantuml, format="svg", align="center"]
-....
-@startuml
-set namespaceSeparator :
-skinparam ClassBackgroundColor #FFFFFF
-skinparam ClassBorderColor #555555
-skinparam ClassFontColor #000000
-skinparam ClassHeaderBackgroundColor #808080
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
 
-skinparam top to bottom direction
-class "Tag Engine.lvlib:Tag Core" {
-{field} -Tag LUT : Variant
-{static} {method} -Add Tag()
-{static} {method} -Get Tag LUT()
-{static} {method} +Get Tag Value_ByRef()
-{static} {method} +Send Tag SetRequest_ByRef()
-{static} {method} +Destruct Tag_By Ref()
-{static} {method} +Get All Tags()
-{static} {method} +Get Tag()
-{static} {method} +Get Tag Property()
-{static} {method} +Get Tag SetRequest Event()
-{static} {method} +Get Tag ValChange Event()
-{static} {method} +Get Tag Value()
-{static} {method} +New Tag()
-{static} {method} +New Tag_From JSON Config()
-{static} {method} +Send Tag SetRequest()
-{static} {method} +Set Tag Property()
-{static} {method} +Initialize()
-{static} {method} +Destruct()
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
 
-}
+**I**nlining: image:inlined.png[] -> Inlined
 
+=== Library Constant VIs
 
-class "Tag Engine.lvlib:Tag" {
-{field} +Name : String
-{field} +Value : Variant
-{field} -Enable ValChange Event : Boolean
-{field} +ValChange : UserEvent
-{field} +Timestamp : Timestamp
-{field} -Properties : Variant
-{field} +Type : Enum {}
-{field} +SetRequest : UserEvent
-{field} -Enable SetRequest Event : Boolean
-{field} +Stale : Boolean
-{field} +TypeString : Array of I16
-{static} {method} +Flatten to JSON Config()
-{static} {method} +Unflatten from JSON Config()
-{static} {method} +Get Property by Name()
-{static} {method} +Set Property by Name()
-{static} {method} +Set Properties from Initial()
-{static} {method} +Destruct()
-{static} {method} +Construct()
-
-}
-
-
-class "Tag Expr" {
-{field} -TagVarNames : Array of String
-{field} -varNames : Array of String
-{field} -TagVarRefs : Array of DataValue
-{field} -TagVarTypes : Array of Enum {}
-{static} {method} +Lookup Tag Values()
-{static} {method} +Tag Expr Eval()
-{method} +Construct()
-
-}
-"mupExpr" <|-- "Tag Expr"
-
-
-
-@enduml
-....
+[NOTE]
+====
+No Constant VIs Found
+====

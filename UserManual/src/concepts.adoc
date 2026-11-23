@@ -1,0 +1,105 @@
+== Concepts
+
+=== Tags
+
+A tag is a named value with a timestamp and a set of properties.
+
+* *Value*: stored as a variant. The data type is fixed by the initial value given to New Tag.
+  The malleable VIs (New Tag, Get Tag Value, Write Tag Value, Send Tag SetRequest) read and write
+  values in their native type.
+* *Timestamp*: the time of the last write. You can pass your own timestamp to Write Tag Value.
+* *Stale flag*: marks a value as out of date, for example before the first real measurement.
+  New Tag can create a tag as stale.
+* *Properties*: description, units, min, max, default, initial, format string and more. New Tag
+  fills in defaults from the initial value's type. You can also add your own properties with
+  Set Tag Property.
+
+=== Names and namespaces
+
+Tag names may contain the characters `a-z A-Z 0-9 : _ / . -` and be up to 256 characters long.
+New Tag removes illegal characters (error 5609) and truncates longer names (error 5610).
+
+Names keep their case, but lookups are not case-sensitive: `Tank1:Level` and `TANK1:LEVEL` are
+the same tag.
+
+Group tags with a namespace, written before the name with a delimiter: `Tank1:Level`. The default
+delimiter is `:`; Initialize can set a different one. Most VIs have a Namespace input that is
+prepended to the names you pass, so a module can work with short names inside its own namespace.
+
+=== The tag store
+
+All tags live in one store, shared by the whole application.
+
+* Call *Initialize* once at startup, from a process that stays in memory until the application
+  stops. The store belongs to that process.
+* Call *Destruct* once at shutdown. It destroys every tag and then the store. After that,
+  {product} can't be used again until LabVIEW unloads it.
+
+=== Names and references
+
+Every VI that takes a tag accepts either its name or its *reference*. A lookup by name searches the
+store each time; a reference goes straight to the tag. Get Tag returns a tag's reference, and New
+Tag returns it when the tag is created. Use references in loops that run often.
+
+Get Tag Value, Write Tag Value and Send Tag SetRequest also accept arrays of names or references,
+to work on several tags at once.
+
+=== Owners, writes and set requests
+
+Each tag should have one *owner*: the module that created it. Only the owner writes the value
+directly, with Write Tag Value. Every other module asks the owner to change the value by sending a
+*SetRequest*. The owner handles the request and decides whether, and how, to apply it.
+
+This keeps the logic for a value (limits, interlocks, hardware writes) in one place.
+
+* Send Tag SetRequest fires the tag's SetRequest event with the requested value and a *Source*
+  string that identifies the requester.
+* With *Synchronous* set, the sender waits, up to the timeout, until the owner confirms the request
+  is done. If the wait times out, *timed out?* is TRUE but no error is returned.
+
+// TODO: describe how the owner's event handler confirms a synchronous SetRequest.
+
+=== Events
+
+Each tag has two user events. Register for them with an Event Structure:
+
+* *ValChange* fires after every write and carries the old and new value and the timestamp. Get it
+  with Get Tag ValChange Event.
+* *SetRequest* fires when another module sends a set request. The owner registers for it with Get
+  Tag SetRequest Event.
+
+The Init ... Cluster VIs on the Tools palette fill a whole cluster of event or tag references at
+once, using the cluster element labels as tag names.
+
+=== Locks
+
+A tag can hold any number of named locks, added with Set Tag Lock and removed with Release Tag
+Lock. While any lock is held, set requests are refused with error 5611, and the message names the
+request's Source. Direct writes with Write Tag Value are not affected.
+
+Locks let an application block set requests under certain conditions, such as an alarm or an
+interlock.
+
+=== Tag expressions
+
+The Tag Expr class evaluates math expressions that read tag values, using the muParser library.
+Write tags in the expression as `$\{TAG_NAME}`, for example `${Tank1:Level} * 2 + offset`.
+
+Construct the expression once; it finds every tag and keeps its reference. Then call Tag Expr Eval
+whenever you need the result: it reads the tags' current values and evaluates the expression.
+Destruct the expression when you're done.
+
+Tag values are converted to DBL for evaluation. Booleans, integers, floating-point numbers,
+timestamps and numeric strings are supported; see Lookup Tag Values for details.
+
+=== JSON configuration
+
+Flatten Tags to JSON List saves tag definitions (name, type, initial value and properties) as a
+JSON array. Build Tags from JSON List creates tags from such an array, so a set of tags can be kept
+in a configuration file.
+
+=== Tag Watchlist
+
+Launch Tag Watchlist UI opens a window that lists every tag. Add tags to the watchlist to see their
+values, timestamps, units and Stale flags update while the application runs. From the watchlist you
+can send a set request, write a value directly for testing, or show a tag's details.

@@ -1,35 +1,419 @@
-== Antidoc
+== +++Tag.lvclass+++
 
-Project website: https://wovalab.gitlab.io/open-source/labview-doc-generator/[Antidoc] 
 
-Maintainer website: https://wovalab.com[Wovalab] 
+*Responsibility:*
+A named, typed value with a timestamp and a set of standard properties. Tag is the basic data item of the Tag Engine.
 
-BSD 3-Clause License
+**Value**
+The value is stored as a variant. Its data type is fixed by the initial value passed to Construct. Each write records a timestamp, and a Tag can be marked Stale when its value is out of date.
 
-Copyright (C) 2019, Wovalab,
-All rights reserved.
+**Properties**
+Each Tag carries named properties: description, units, min, max, default, initial, formatString, rank and elementType. Construct fills in defaults from the initial value's type. Properties can be read and written with the accessor VIs, or by name with Get/Set Property by Name.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+**Events**
+- ValChange: fired after the value changes, carrying the old and new value and timestamp. Enabled by Read ValChange.
+- SetRequest: lets other code ask the Tag's owner to set a new value, optionally waiting for confirmation. Enabled by Read SetRequest Event, sent by Write SetRequest.
 
-* Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
+**Locking**
+Set Lock and Release Lock add and remove named locks. While any lock is held, Write SetRequest refuses requests unless Ignore Lock is set.
 
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
+*Version:* 1.0.0.3
 
-* Neither the name of the copyright holder nor the names of its
-  contributors may be used to endorse or promote products derived from
-  this software without specific prior written permission.
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+skinparam top to bottom direction
+class "Tag Engine Core.lvlib:Tag" {
+{field} +Name : String
+{field} +Value : Variant
+{field} -Enable ValChange Event : Boolean
+{field} +ValChange : NoType
+{field} +Timestamp : Timestamp
+{field} -Properties : Variant
+{field} +Type : Enum U8
+{field} +SetRequest : NoType
+{field} -Enable SetRequest Event : Boolean
+{field} +Stale : Boolean
+{field} +TypeString : Array of I16
+{field} +LockList : Variant
+{field} +Locked : Boolean
+{static} {method} +Flatten to JSON Config()
+{static} {method} +Unflatten from JSON Config()
+{static} {method} +Set Lock()
+{static} {method} +Release Lock()
+{static} {method} +Get Property by Name()
+{static} {method} +Set Property by Name()
+{static} {method} +Set Properties from Initial()
+{static} {method} +Destruct()
+{static} {method} +Construct()
+
+}
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4a,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|+++Read Name+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Name.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Name.vi]
+|Returns the Tag's name.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Timestamp+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Timestamp.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Timestamp.vi]
+|Returns when the Tag's value was last written.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Value+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Value.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Value.vi]
+|Returns the Tag's current value as a variant.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write Value+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write Value.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write Value.vi]
+|Writes a new value to the Tag, stamped with the current time. It calls Write Value with Timestamp with IgnoreIfEqual = FALSE, so it always writes and always fires the ValChange event (if enabled).
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Type+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Type.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Type.vi]
+|Returns the Tag's data type, which is set from the initial value when the Tag is constructed.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read ValChange+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read ValChange.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read ValChange.vi]
+|Returns the ValChange user event and turns on ValChange events for this Tag. Register for this event to be notified whenever the Tag's value changes.
+
+Note: this changes the Tag's state even though it is named "Read".
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Config String+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Config String.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Config String.vi]
+|Returns the Tag's configuration as a JSON string. It's a wrapper around Flatten to JSON Config.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Description+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Description.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Description.vi]
+|Returns the Tag's "description" property.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write Description+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write Description.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write Description.vi]
+|Sets the Tag's "description" property. The text is cut to 256 characters.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Max+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Max.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Max.vi]
+|Returns the Tag's "max" property. For numeric types it defaults to the type's highest value.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write Max+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write Max.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write Max.vi]
+|Sets the Tag's "max" property. For numeric types it defaults to the type's highest value.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Min+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Min.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Min.vi]
+|Returns the Tag's "min" property. For numeric types it defaults to the type's lowest value.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write Min+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write Min.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write Min.vi]
+|Sets the Tag's "min" property. For numeric types it defaults to the type's lowest value.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read formatString+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read formatString.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read formatString.vi]
+|Returns the Tag's "formatString" property, the format string used to show the value as text.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write formatString+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write formatString.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write formatString.vi]
+|Sets the Tag's "formatString" property, the format string used to show the value as text.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Default+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Default.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Default.vi]
+|Returns the Tag's "default" property, the value to fall back to when no other value is set.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write Default+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write Default.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write Default.vi]
+|Sets the Tag's "default" property, the value to fall back to when no other value is set.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Units+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Units.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Units.vi]
+|Returns the Tag's "units" property, an engineering-units label.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write Units+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write Units.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write Units.vi]
+|Sets the Tag's "units" property, an engineering-units label. The text is cut to 50 characters.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Initial+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Initial.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Initial.vi]
+|Returns the Tag's "initial" property, the value the Tag was constructed with.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read SetRequest Event+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read SetRequest Event.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read SetRequest Event.vi]
+|Returns the SetRequest user event and turns on SetRequest events for this Tag. The owner of the Tag registers for this event to handle requests from other code to set its value.
+
+Note: this changes the Tag's state even though it is named "Read".
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Rank+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Rank.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Rank.vi]
+|Returns the Tag's "rank" property: the number of array dimensions, or 0 for a single value.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read ElementType+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read ElementType.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read ElementType.vi]
+|Returns the Tag's "elementType" property: the data type of the array elements, or of the value itself for a single value.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write Stale+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write Stale.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write Stale.vi]
+|Sets or clears the Tag's Stale flag. The value and timestamp are not changed.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Stale+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Stale.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Stale.vi]
+|Returns TRUE if the Tag's value has been marked stale (out of date).
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Property List+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Property List.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Property List.vi]
+|Returns the names of all properties stored on the Tag.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Read TypeString+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read TypeString.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read TypeString.vi]
+|Returns the LabVIEW type descriptor (type string) of the Tag's value.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read Locked+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read Locked.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read Locked.vi]
+|Returns TRUE if the Tag holds one or more locks. While it is locked, Write SetRequest refuses requests unless Ignore Lock is TRUE.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Read LockList+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Read LockList.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Read LockList.vi]
+|Returns the names of all locks currently held on the Tag. Empty if it is not locked.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Flatten to JSON Config+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Flatten to JSON Config.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Flatten to JSON Config.vi]
+|Turns the Tag's configuration (name, type, typeString and all properties) into a JSON string, for example to save it to a configuration file.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Unflatten from JSON Config+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Unflatten from JSON Config.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Unflatten from JSON Config.vi]
+|Rebuilds a Tag from JSON made by Flatten to JSON Config. It reads the name, type and properties (decoding the Base64-encoded values), then constructs the Tag with the stored initial value.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Set Lock+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Set Lock.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Set Lock.vi]
+|Adds a lock named LockName to the Tag and sets Locked to TRUE. A Tag can hold several named locks, and stays locked until all of them are released.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Release Lock+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Release Lock.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Release Lock.vi]
+|Removes the lock named LockName. Locked becomes FALSE when no locks are left.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+
+|+++Get Property by Name+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Get Property by Name.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Get Property by Name.vi]
+|Returns the property named Name. If it doesn't exist, Found? is FALSE and error 5602 ("Property "<name>" not found.") is returned.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Set Property by Name+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Set Property by Name.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Set Property by Name.vi]
+|Creates or overwrites the property named Name. Replaced? is TRUE if an existing property was overwritten.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Set Properties from Initial+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Set Properties from Initial.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Set Properties from Initial.vi]
+|Helper for Construct. Works out the Tag's data type from Initial Value and fills in default properties: initial, min/max (the type's range), rank, elementType, formatString and default. Properties already in Properties in are kept.
+|image::empty.png[empty.png]
+|image::reentrancy-shared.png[reentrancy-shared.png]
+|image::empty.png[empty.png]
+
+|+++Write SetRequest+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write SetRequest.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write SetRequest.vi]
+|Asks the Tag's owner to set a new value, by firing the SetRequest event.
+
+If the Tag is locked and Ignore Lock is FALSE, nothing is sent and an error listing the held locks is returned. If nobody has enabled SetRequest events, nothing happens.
+
+If Synchronous is TRUE, the VI waits up to Timeout ms for the owner to confirm the request (timed out? reports a timeout). Source identifies who made the request.
+
+Note: the value's type is not checked yet.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Write Value with Timestamp+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Write Value with Timestamp.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Write Value with Timestamp.vi]
+|Writes a new value with the given timestamp. If no timestamp is given (zero), the current time is used. If IgnoreIfEqual is TRUE, the write is skipped when the new value equals the current one.
+
+After a successful write, a ValChange event is fired if the event is enabled. The event carries the old and new value and timestamp.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Destruct+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Destruct.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Destruct.vi]
+|Destroys the Tag's ValChange and SetRequest user events. Call it when the Tag is no longer needed.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+
+|+++Construct+++
+
+|image::Tag Engine Core.lvlib-Tag.lvclass-Construct.vi.png[Tag Engine Core.lvlib:Tag.lvclass:Construct.vi]
+|Initializes the Tag object.
+The input initial value will define the type.
+
+The input Tag name is checked. Illegal characters are removed and error 5609 is returned. Names longer than 256 characters are truncated and error 5610 is returned. Valid characters are: a-z A-Z 0-9 : _ / . -
+
+Additional properties can be passed in as attributes of the properties variant.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::inlined.png[inlined.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====

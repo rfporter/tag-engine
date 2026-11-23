@@ -1,12 +1,14 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
 <LVClass LVVersion="20008000">
-	<Property Name="NI.Lib.Description" Type="Str">The Tag Expr class extends the mupExpr class (from muParser library), adding support for the Tag Engine.
+	<Property Name="NI.Lib.Description" Type="Str">A math expression that can read Tag values. Extends the mupExpr class from the muParser library.
 
-Expressions can include any existing Tag Name. Tag references are cached for faster value lookup during expression evaluation.
+Tags are referenced in the expression as ${TAG_NAME}, for example "${Tank1:Level} * 2 + offset". Tag names are not case-sensitive. Other variables and constants work as in mupExpr.
 
-Note that Tag values are coerced to DBL before evaluating the expression.
+Usage: Construct once (this finds every Tag and keeps its reference), call Tag Expr Eval as often as needed (each call reads the Tags' current values), then Destruct.
 
-Also note that any mupExpr eval function can be used, however Tag Expr Eval is included in this class for convenience.</Property>
+Any mupExpr Eval VI can be used instead of Tag Expr Eval, as long as Lookup Tag Values is called first to read the current Tag values.
+
+Tag values are converted to DBL for evaluation. See Lookup Tag Values for the supported types.</Property>
 	<Property Name="NI.Lib.HelpPath" Type="Str"></Property>
 	<Property Name="NI.Lib.Icon" Type="Bin">)!#!!!!!!!)!"1!&amp;!!!-!%!!!@````]!!!!"!!%!!!*-!!!*Q(C=\&gt;5R&lt;BJ"&amp;-&lt;RTV'+N(O$C#O]%S""E39&gt;0I#,V\OQ;#GJINCJXB7Y1=168O7?+X#&amp;T8_'&amp;Q1O!F*M*96X0,$\\=[&lt;HX&gt;(C^3X4^*(D:?WY9`&lt;&amp;?&gt;\D8Z&gt;\2%.&amp;@@]^,O/?BP'9TZ7&gt;KQUH)]@$V7(]7T]=$\_R@T8_P`S`)6.\^P\^G_XV=6&amp;_O:L^E&lt;N2520?N#&gt;&lt;GJ4D5G?Z%G?Z%G?Z%%?Z%%?Z%%?Z%\OZ%\OZ%\OZ%:OZ%:OZ%:OZ,W2CVTE)I?54*Z-F"2.#C181V(SE8A34_**0"QK]33?R*.Y%A_8+0%EHM34?")0QZ2Y%E`C34S*BV*&gt;ELW2YUE]F&amp;@A#4S"*`!%(K:5Y!E!Q72"Y;!)$!5HAZX!%XA#$\M+0)%H]!3?Q-.J":\!%XA#4_"B3,]LU47NE?/BD"S0YX%]DM@R5&amp;K/R`%Y(M@D?*B/DM@R/!BH1K=Y"$G$H!O=!]@D?0C3YX%]DM@R/"Z/^3@E`=YU47PE?!S0Y4%]BM@Q5%+'R`!9(M.D?#ALQW.Y$)`B-4R-*=.D?!S0!4%G:8I:R9S"RE6'9(DY[[P&amp;_F/+,L(?J&amp;K]KE7J7GSK2;2;(+K(LHK9KI?EOPGKG[K[7;K&lt;I0LH6'A62D7*;H#\5(M_&gt;`1N@5.@UZ@U"8V'H^#(.P36,^TP^^LN&gt;NJON^JM.FKPVVIOFVIM&amp;JL.:JJ-*O*(]PA;_%Q\PB!/\[56_[X``0:Q``B^`O8J^O\_R`.]_P4V9@L\8/NP^&amp;P[(\Q&lt;^5'H&gt;&lt;F(PQ"ZF(B@!!!!!!</Property>
 	<Property Name="NI.Lib.LocalName" Type="Str">Tag Expr</Property>

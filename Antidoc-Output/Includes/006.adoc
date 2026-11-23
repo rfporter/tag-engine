@@ -1,14 +1,14 @@
-== Tag Expr.lvclass
+== +++Tag Core.lvclass+++
+
 
 *Responsibility:*
-+++The Tag Expr class extends the mupExpr class (from muParser library), adding support for the Tag Engine.+++
+A single, shared registry of all Tags in the application.
 
-+++Expressions can include any existing Tag Name. Tag references are cached for faster value lookup during expression evaluation.+++
+Tags are stored by name and handed out as data value references (DVRs), so all callers work on the same Tag. Names are not case-sensitive: they are stored and looked up in upper case.
 
-+++Note that Tag values are coerced to DBL before evaluating the expression.+++
+Tags can be grouped into namespaces by giving them names like "Namespace:Name". The separator is set with Set Delimiter and defaults to ":".
 
-+++Also note that any mupExpr eval function can be used, however Tag Expr Eval is included in this class for convenience.+++
-
+Call Destruct at shutdown to destroy every Tag and the lookup table.
 
 *Version:* 1.0.0.0
 
@@ -22,72 +22,95 @@ skinparam ClassFontColor #000000
 skinparam ClassHeaderBackgroundColor #808080
 
 skinparam top to bottom direction
-class "Tag Expr" {
-{field} -TagVarNames : Array of String
-{field} -varNames : Array of String
-{field} -TagVarRefs : Array of DataValue
-{field} -TagVarTypes : Array of Enum {}
-{static} {method} +Lookup Tag Values()
-{static} {method} +Tag Expr Eval()
-{method} +Construct()
+class "Tag Engine Core.lvlib:Tag Core" {
+{field} -Tag LUT : Variant
+{field} -Delimiter : String
+{static} {method} +Add Tag()
+{static} {method} +Remove Tag()
+{static} {method} +Set Delimiter()
+{static} {method} +Get All Tags()
+{static} {method} -Get Tag LUT()
+{static} {method} +Tag Lookup_By Name()
+{static} {method} +Get Delimiter()
+{static} {method} +Destruct()
 
 }
-"mupExpr" <|-- "Tag Expr"
 
 
 
 @enduml
 ....
 
+=== Methods
+
 .Functions (non private scope only)
-[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+[cols="<.<4a,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
 |===
 |Name |Connector pane |Description |S. |R. |I.
 
-|Construct
-|image:Tag_Expr.lvclass_Construct.vi.png[Tag Expr.lvclass:Construct.vi]
-|+++Construct a new muExpr instance. Input an expression or a set of expressions.+++
-+++Returns the expression handle and the list of variables found in the expression.+++
+|+++Add Tag+++
 
-+++Optionally input a list of constant name-value pairs.+++
+|image::Tag Engine Core.lvlib-Tag Core.lvclass-Add Tag.vi.png[Tag Engine Core.lvlib:Tag Core.lvclass:Add Tag.vi]
+|Adds a Tag to the registry and returns a data value reference to it. Names are not case-sensitive.
 
-+++Set "Use system decimal point" to true if you want to adapt to the system's decimal point. If the system's decimal point is a comma, the argument separator will be changed to a semi-colon. The default decimal point is a period. The default argument separator is a comma.+++
+If a Tag with the same name already exists, the existing Tag's reference is returned along with error 5601 (Tag "<name>" already exists), and the Tag passed in is not added.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::empty.png[empty.png]
 
-+++Set Bulk Size sets the range for bulk mode evaluations. Default is 1 (single result).+++
+|+++Remove Tag+++
 
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
-|image:empty.png[empty.png]
+|image::Tag Engine Core.lvlib-Tag Core.lvclass-Remove Tag.vi.png[Tag Engine Core.lvlib:Tag Core.lvclass:Remove Tag.vi]
+|Removes the Tag from the registry, frees its reference and calls Tag Destruct to destroy its events.
 
-|Lookup Tag Values
-|image:Tag_Expr.lvclass_Lookup_Tag_Values.vi.png[Tag Expr.lvclass:Lookup Tag Values.vi]
-|+++Lookup the current values of all Tags within the expression.+++
+The Tag is destroyed even if its name was not in the registry. removed? is TRUE only if the name was found and removed. Errors from destroying the Tag are not reported in error out.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::empty.png[empty.png]
 
-+++Values are coerced to DBL type.+++
+|+++Set Delimiter+++
 
-+++Supported types are for Coercion are:+++
-+++- Boolean+++
-+++- Signed Integer+++
-+++- Unsigned Integer+++
-+++- Floating Point+++
-+++- String (with period decimal point)+++
-+++- Timestamp+++
+|image::Tag Engine Core.lvlib-Tag Core.lvclass-Set Delimiter.vi.png[Tag Engine Core.lvlib:Tag Core.lvclass:Set Delimiter.vi]
+|Sets the separator that Tag Lookup_By Name places between a namespace and a Tag name. The default is ":". Other typical values are "::" or "_".
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::empty.png[empty.png]
 
-+++All other types will return NaN with error 5605 reported.+++
+|+++Get All Tags+++
 
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
+|image::Tag Engine Core.lvlib-Tag Core.lvclass-Get All Tags.vi.png[Tag Engine Core.lvlib:Tag Core.lvclass:Get All Tags.vi]
+|Returns references to every Tag in the registry.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::empty.png[empty.png]
 
-|Tag Expr Eval
-|image:Tag_Expr.lvclass_Tag_Expr_Eval.vi.png[Tag Expr.lvclass:Tag Expr Eval.vi]
-|+++This VI looks up current Tag values then evaluates the expression.+++
+|+++Tag Lookup_By Name+++
 
-+++The Boolean result is true if the numeric result is not equal to zero or NaN.+++
+|image::Tag Engine Core.lvlib-Tag Core.lvclass-Tag Lookup_By Name.vi.png[Tag Engine Core.lvlib:Tag Core.lvclass:Tag Lookup_By Name.vi]
+|Finds a Tag by name and returns its reference. If Namespace is not empty, the name searched for is Namespace + delimiter + Name. Names are not case-sensitive.
 
-|image:empty.png[empty.png]
-|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
-|image:inlined.png[inlined.png]
+If the Tag doesn't exist, found is FALSE and error 5602 (Tag "<name>" not found) is returned.
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::empty.png[empty.png]
+
+|+++Get Delimiter+++
+
+|image::Tag Engine Core.lvlib-Tag Core.lvclass-Get Delimiter.vi.png[Tag Engine Core.lvlib:Tag Core.lvclass:Get Delimiter.vi]
+|Returns the separator placed between a namespace and a Tag name. The default is ":".
+|image::empty.png[empty.png]
+|image::reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image::empty.png[empty.png]
+
+|+++Destruct+++
+
+|image::Tag Engine Core.lvlib-Tag Core.lvclass-Destruct.vi.png[Tag Engine Core.lvlib:Tag Core.lvclass:Destruct.vi]
+|Frees every Tag in the registry (calling Tag Destruct on each), then frees the lookup table.
+
+Call it once, at shutdown: the registry cannot be used again until LabVIEW unloads Tag Core.
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
+|image::empty.png[empty.png]
 |===
 
 **S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
@@ -95,3 +118,10 @@ class "Tag Expr" {
 **R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
 
 **I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====
