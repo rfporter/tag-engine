@@ -85,3 +85,43 @@ Contact Porter on LAVA (https://lavag.org) or NI Forums (https://forums.ni.com/)
 
 Thanks to EZ-TechStop LLC and Canter Automation Inc for supporting this project.
 
+# Building the Documentation
+
+The documentation has two parts:
+
+* **Project documentation** in `Antidoc-Output/` (`Tag Engine.html` and `Tag Engine.pdf`), generated from the project by [Antidoc](https://wovalab.gitlab.io/open-source/docs/antidoc/latest/).
+* **User manual** in `UserManual/Tag Engine User Manual.pdf`, built from the hand-written chapters in `UserManual/src/` and a palette reference generated from the functions palette in `Tag Engine.vipb`.
+
+Both show the version of the Source Distribution build spec in `Tag Engine.lvproj`.
+
+## Prerequisites
+
+* LabVIEW 2020 with Antidoc and its CLI add-on (from VIPM)
+* AsciiDoc for LabVIEW (from VIPM), which installs the Ruby and Asciidoctor that the scripts use
+* G-CLI
+* An Antidoc settings file, `%USERPROFILE%\Documents\LabVIEW Data\Antidoc\Antidoc.ini`, containing the following, so that the cover page shows the package version and author:
+
+  ```ini
+  [Custom Attributes]
+  version-label=Version
+  author=Ryan Porter
+  revremark!=
+  ```
+
+## Building
+
+1. Close `Tag Engine.lvproj` in LabVIEW. Antidoc reads an open project from memory, so unsaved or on-disk changes would be missed.
+2. Run `build-docs.cmd` from the project folder (or double-click it in Explorer).
+
+The script builds the Antidoc HTML, then the Antidoc PDF, then the user manual, and stops with an error if any step fails. Options:
+
+| Option | Effect |
+|---|---|
+| `--only-antidoc` | Build only the project documentation |
+| `--only-manual` | Build only the user manual (needs the connector pane images in `Antidoc-Output/Images` from an earlier Antidoc run) |
+| `--formats html,pdf` | Antidoc formats to render (default: both) |
+| `--lv-ver 2020` | LabVIEW version G-CLI uses (default: 2020) |
+
+To build or check only the user manual, run `UserManual\build-manual.cmd`; `--render html` writes HTML and `--render none` checks the document without writing it.
+
+Regenerate the documentation after changing VI descriptions, adding or removing VIs, or changing the palette, and commit `Antidoc-Output/` together with the code change.
