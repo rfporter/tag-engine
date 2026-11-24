@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2018" Created_Date="2020-05-19 15:57:16" Modified_Date="2026-11-12 22:51:28" Creator="leonidas" Comments="" ID="12ba096ff0567e0d32fedd1c2b442277">
+<VI_Package_Builder_Settings Version="2018" Created_Date="2020-05-19 15:57:16" Modified_Date="2026-11-23 18:21:31" Creator="leonidas" Comments="" ID="f95aca23f9d96497035bcb66d7b9fc83">
   <Library_General_Settings>
     <Package_File_Name>Tag_Engine</Package_File_Name>
-    <Library_Version>2.2.0.2</Library_Version>
+    <Library_Version>2.2.0.3</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>..\builds\Tag Engine\Source Distribution</Library_Source_Folder>
     <Library_Output_Folder>..\builds\Tag Engine</Library_Output_Folder>
@@ -53,9 +53,8 @@ Features:
       <Copyright>Copyright (c) 2023, Ryan Porter</Copyright>
       <Packager>Ryan Porter</Packager>
       <URL>https://github.com/rfporter/tag-engine/</URL>
-      <Release_Notes>- Add source string to Set Request event data. Can be used to indicate from where the Request is made.
-- Add lock list per tag. Used to block tag's Set Request events.
-- Change Tag Expression syntax (breaking change). Tag names must be wrapped in ${TAG_NAME} in order to be marked as tags instead of variables. This allows loosens restrictions an tag naming, allowing for "/" character as tag namespace delimiter.</Release_Notes>
+      <Release_Notes>- Updated documentation
+- Built user manual PDF</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
@@ -402,7 +401,7 @@ Features:
         <Path>..\builds\Tag Engine\Source Distribution\API\Send Tag SetRequest.vim</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>97DC61986B7ABB6A42F3255867711011</GUID>
+      <GUID>CA2336B4AF25EACFA0252B2F4A7EA867</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -479,7 +478,7 @@ Features:
         <Path>..\builds\Tag Engine\Source Distribution\Tag Expr\Destruct.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>92238642510A0D5D4DB175AF2EE09E64</GUID>
+      <GUID>0C971F0D42EB4921202D60D6A3F642E9</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -570,7 +569,7 @@ Features:
         <Path>..\builds\Tag Engine\Source Distribution\Tools\Variant to String.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>04B1A42D4CA1D0967EEC9A3CD0BC360C</GUID>
+      <GUID>4CBF9F7AE9B7CACAC681D141CC949633</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -703,7 +702,7 @@ Features:
         <Path>..\builds\Tag Engine\Source Distribution\API\Release Tag Lock_ByRef.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>E43A5ABA8CE188B495E3A40B31D993CD</GUID>
+      <GUID>FDA90239D13642062CB9C27B234582FB</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -766,7 +765,7 @@ Features:
         <Path>..\builds\Tag Engine\Source Distribution\Tools\Flatten Tags to JSON List.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>62F62AC7BB8350F034BF9BE70FBA8090</GUID>
+      <GUID>D81F7BEEDE1D05CF33EBD0BC8E5E3A4C</GUID>
     </Functions_Palette_Data>
   </Library_Palette_Definition>
 </VI_Package_Builder_Settings>

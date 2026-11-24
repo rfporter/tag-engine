@@ -27,8 +27,8 @@ This library is open source and licensed under BSD 2-Clause.
 # Requirements
 
 * LabVIEW 2020 or later
-* [muParser Expression Parser](https://www.vipm.io/package/lv_muparser/) v2.1.0.3
-* [JSONText](https://www.vipm.io/package/jdp_science_jsontext/) v1.6.10 or later
+* [muParser Expression Parser](https://www.vipm.io/package/lv_muparser/) v3.1.2.1 or later
+* [JSONText](https://www.vipm.io/package/jdp_science_jsontext/) v1.9.1.125 or later
 
 # Installation
 
@@ -85,6 +85,47 @@ Contact Porter on LAVA (https://lavag.org) or NI Forums (https://forums.ni.com/)
 
 Thanks to EZ-TechStop LLC and Canter Automation Inc for supporting this project.
 
+# Setting Up the Development Environment
+
+To work on Tag Engine itself (not just use it), set up a Windows PC as follows. The versions are the ones the project is currently developed with; newer versions should work.
+
+1. **LabVIEW 2020 SP1** (32-bit). The project is saved in LabVIEW 2020, so don't save it in a newer version.
+2. **VI Package Manager (VIPM)**, to install the packages below and to build the Tag Engine package from `Tag Engine.vipb`.
+3. Install these packages into LabVIEW 2020 with VIPM:
+
+   | Package | Version | Used for |
+   |---|---|---|
+   | JSONtext (JDP Science) | 1.9.1.125 | Runtime dependency |
+   | muParser Expression Parser (`lv_muparser`) | 3.1.2.1 | Runtime dependency (Tag Expr) |
+   | Caraya (JKI) | 1.4.4.148 | Unit tests |
+   | G-CLI (Wiresmith Technology) | 3.0.1.98 | Running the unit tests and Antidoc from the command line; installs `g-cli.exe` in `C:\Program Files\G-CLI\bin` |
+   | Antidoc (Wovalab) | 3.3.2.887 | Project documentation |
+   | Antidoc add-on: LabVIEW Project documentation | 3.3.0.411 | Project documentation |
+   | Antidoc CLI | 3.4.0.126 | Running Antidoc through G-CLI |
+   | AsciiDoc for LabVIEW (Wovalab) | 1.12.1.492 | Rendering the docs; installs the Ruby, Asciidoctor and Asciidoctor PDF used by `build-docs.rb` |
+
+   VIPM installs the packages these depend on (OpenG, JKI State Machine and others).
+4. **Antidoc settings:** create `%USERPROFILE%\Documents\LabVIEW Data\Antidoc\Antidoc.ini` as described under [Prerequisites](#prerequisites) in Building the Documentation.
+5. **Git**, to clone the repository. The scripts don't depend on where it is cloned.
+
+Don't install the Tag Engine package itself into the LabVIEW used for development. Its VIs have the same names and libraries as the project's, so LabVIEW could load the installed copies instead of the ones in the repository.
+
+To check the setup, open `Tag Engine.lvproj` (no missing dependencies should be reported), close it, then [run the unit tests](#running-the-unit-tests) and [build the documentation](#building-the-documentation).
+
+# Running the Unit Tests
+
+The unit tests are [Caraya](https://github.com/JKISoftware/Caraya) tests in `Unit Tests/` (every `*.utest.vi`). To run them in the LabVIEW editor, run a test VI.
+
+To run them all from the command line, use [G-CLI](https://github.com/wiresmith-tech/G-CLI) with `Unit Tests/Run Unit Tests.vi`. It needs LabVIEW 2020 with Caraya and G-CLI installed:
+
+```
+g-cli --lv-ver 2020 "C:\LabVIEW\tag-engine\Unit Tests\Run Unit Tests.vi" -- [report path]
+```
+
+* It writes a JUnit XML report to the report path, or to `Unit Tests/Unit Tests-TestReport.xml` if no path is given. Report files are ignored by git.
+* The exit code is 0 when every test passes, and the Caraya error code (7002) when a test fails.
+* `Run Unit Tests.vi` is set to run when opened, so opening it in the editor runs the tests. Wait for it to finish (or abort it) before editing it.
+
 # Building the Documentation
 
 The documentation has two parts:
@@ -125,3 +166,19 @@ The script builds the Antidoc HTML, then the Antidoc PDF, then the user manual, 
 To build or check only the user manual, run `UserManual\build-manual.cmd`; `--render html` writes HTML and `--render none` checks the document without writing it.
 
 Regenerate the documentation after changing VI descriptions, adding or removing VIs, or changing the palette, and commit `Antidoc-Output/` together with the code change.
+
+# Building a Release
+
+Build a release in this order, so that the package contains tested code and up-to-date documentation. Paths are relative to the repository folder.
+
+1. **Set the version.** Use the same version in both places:
+   * the **Source Distribution** build spec in `Tag Engine.lvproj` (Properties > Version Information). The documentation takes its version from here.
+   * `Tag Engine.vipb` (open it in VIPM; the version is at the top of the build window).
+
+   Add the release to [Changes](#changes) in this README.
+2. **Run the unit tests** (see [Running the Unit Tests](#running-the-unit-tests)) and check that every test passes (exit code 0).
+3. **Build the documentation.** Close `Tag Engine.lvproj` in LabVIEW, then run `build-docs.cmd` (see [Building the Documentation](#building-the-documentation)). Check that the covers of `Antidoc-Output/Tag Engine.pdf` and `UserManual/Tag Engine User Manual.pdf` show the new version.
+4. **Build the Source Distribution.** Delete `../builds/Tag Engine/Source Distribution` if it exists, so files removed from the project don't stay in the package. Open `Tag Engine.lvproj`, right-click **Build Specifications > Source Distribution** and select **Build**. The output goes to `../builds/Tag Engine/Source Distribution`.
+5. **Build the VIPM package.** Open `Tag Engine.vipb` in VIPM and click **Build**. It packages the Source Distribution output (not the project folder), with the functions palette defined in the `.vipb`. The package (`tag_engine-<version>.vip`) goes to `../builds/Tag Engine`.
+6. **Test the package.** Install it with VIPM in a LabVIEW that isn't used for development (see [Setting Up the Development Environment](#setting-up-the-development-environment)), and check the palette and an example.
+7. **Commit and tag.** Commit the version change, the changelog and the regenerated `Antidoc-Output/`, and tag the commit with the version (for example `v2.2.0.2`).

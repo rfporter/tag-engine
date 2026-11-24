@@ -43,6 +43,11 @@ include::../../THIRD-PARTY-NOTICES.adoc[leveloffset=+2]</Property>
 		<Item Name="Tests" Type="Folder">
 			<Item Name="TagExpr_general.utest.vi" Type="VI" URL="../Unit Tests/TagExpr_general.utest.vi"/>
 			<Item Name="Tag Engine_general.utest.vi" Type="VI" URL="../Unit Tests/Tag Engine_general.utest.vi"/>
+			<Item Name="Run Unit Tests.vi" Type="VI" URL="../Unit Tests/Run Unit Tests.vi"/>
+		</Item>
+		<Item Name="Docs" Type="Folder">
+			<Item Name="Tag Engine.pdf" Type="Document" URL="../Antidoc-Output/Tag Engine.pdf"/>
+			<Item Name="Tag Engine User Manual.pdf" Type="Document" URL="../UserManual/Tag Engine User Manual.pdf"/>
 		</Item>
 		<Item Name="Tag Engine.lvlib" Type="Library" URL="../Tag Engine.lvlib"/>
 		<Item Name="Tag Watchlist.lvlib" Type="Library" URL="../Watchlist/Tag Watchlist.lvlib"/>
@@ -162,6 +167,13 @@ include::../../THIRD-PARTY-NOTICES.adoc[leveloffset=+2]</Property>
 				<Item Name="Find First Error.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Find First Error.vi"/>
 				<Item Name="Librarian Set Info.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/libraryn.llb/Librarian Set Info.vi"/>
 				<Item Name="Set VI Library File Info.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/libraryn.llb/Set VI Library File Info.vi"/>
+				<Item Name="CLI.lvclass" Type="LVClass" URL="/&lt;vilib&gt;/Wiresmith Technology/G CLI/CLI Class/CLI.lvclass"/>
+				<Item Name="NI_LVConfig.lvlib" Type="Library" URL="/&lt;vilib&gt;/Utility/config.llb/NI_LVConfig.lvlib"/>
+				<Item Name="8.6CompatibleGlobalVar.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/config.llb/8.6CompatibleGlobalVar.vi"/>
+				<Item Name="Simple Error Handler.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Simple Error Handler.vi"/>
+				<Item Name="TCP_NoDelay_Windows.vi" Type="VI" URL="/&lt;vilib&gt;/Wiresmith Technology/G CLI/Dependencies/TCP_NoDelay_Windows.vi"/>
+				<Item Name="TCP Get Raw Net Object.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/tcp.llb/TCP Get Raw Net Object.vi"/>
+				<Item Name="TCP_NoDelay_Linux.vi" Type="VI" URL="/&lt;vilib&gt;/Wiresmith Technology/G CLI/Dependencies/TCP_NoDelay_Linux.vi"/>
 			</Item>
 			<Item Name="user.lib" Type="Folder">
 				<Item Name="openg_error.lvlib" Type="Library" URL="/&lt;userlib&gt;/_OpenG.lib/error/error.llb/openg_error.lvlib"/>
@@ -169,6 +181,12 @@ include::../../THIRD-PARTY-NOTICES.adoc[leveloffset=+2]</Property>
 				<Item Name="openg_file.lvlib" Type="Library" URL="/&lt;userlib&gt;/_OpenG.lib/file/file.llb/openg_file.lvlib"/>
 				<Item Name="openg_array.lvlib" Type="Library" URL="/&lt;userlib&gt;/_OpenG.lib/array/array.llb/openg_array.lvlib"/>
 				<Item Name="openg_string.lvlib" Type="Library" URL="/&lt;userlib&gt;/_OpenG.lib/string/string.llb/openg_string.lvlib"/>
+			</Item>
+			<Item Name="wsock32.dll" Type="Document" URL="wsock32.dll">
+				<Property Name="NI.PreserveRelativePath" Type="Bool">true</Property>
+			</Item>
+			<Item Name="libc.so.6" Type="Document" URL="libc.so.6">
+				<Property Name="NI.PreserveRelativePath" Type="Bool">true</Property>
 			</Item>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
@@ -198,7 +216,7 @@ include::../../THIRD-PARTY-NOTICES.adoc[leveloffset=+2]</Property>
 				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
 				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/Source Distribution/data</Property>
 				<Property Name="DestinationCount" Type="Int">2</Property>
-				<Property Name="Source[0].itemID" Type="Str">{7EA3BBAD-18B3-4754-8E9F-7A9AA58DFD99}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{4A5674A8-43A3-46AF-9F4A-4B9641407E6C}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[1].itemID" Type="Ref">/My Computer/Tag Engine.lvlib</Property>
@@ -228,7 +246,10 @@ include::../../THIRD-PARTY-NOTICES.adoc[leveloffset=+2]</Property>
 				<Property Name="Source[7].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[7].itemID" Type="Ref">/My Computer/THIRD-PARTY-NOTICES.adoc</Property>
 				<Property Name="Source[7].sourceInclusion" Type="Str">Include</Property>
-				<Property Name="SourceCount" Type="Int">8</Property>
+				<Property Name="Source[8].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[8].itemID" Type="Ref">/My Computer/Docs/Tag Engine User Manual.pdf</Property>
+				<Property Name="Source[8].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="SourceCount" Type="Int">9</Property>
 			</Item>
 		</Item>
 	</Item>

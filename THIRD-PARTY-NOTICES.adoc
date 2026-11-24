@@ -7,7 +7,7 @@ Tag Engine uses the third-party software listed below. Each component keeps its 
 |Component |Version |Used for |License
 
 |muParser API for LabVIEW
-|2.1.0.3
+|3.1.2.1 or later
 |Tag Expr library (expression parsing)
 |BSD 2-Clause
 
@@ -17,7 +17,7 @@ Tag Engine uses the third-party software listed below. Each component keeps its 
 |MIT
 
 |JSONtext
-|1.6.10 or later
+|1.9.1.125 or later
 |JSON configuration of Tags
 |BSD-style (JDP Science)
 

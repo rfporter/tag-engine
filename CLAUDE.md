@@ -133,3 +133,28 @@ written.
 - **Version:** from the Source Distribution build spec, as for the Antidoc docs.
 - **XML files** (`.vipb`, `.lvproj`, `.lvlib`, `.lvclass`) are read with REXML
   (`UserManual/lib/lv_files.rb`).
+
+## Unit tests
+
+The unit tests are Caraya tests: every `*.utest.vi` in `Unit Tests/`. Run them all through G-CLI
+with `Unit Tests/Run Unit Tests.vi`:
+
+```bash
+env -u NoDefaultCurrentDirectoryInExePath g-cli --lv-ver 2020 'C:\LabVIEW\tag-engine\Unit Tests\Run Unit Tests.vi' -- [report path]
+```
+
+- The exit code is 0 when every test passes, and the Caraya error code (7002) when one fails.
+  G-CLI prints "Ran N test VI(s). Report: <path>", and the error on stderr if there is one.
+- The JUnit report goes to the given path, or to `Unit Tests/Unit Tests-TestReport.xml`.
+  `*-TestReport.xml` is in `.gitignore`. Read the report for the per-test results.
+- Run it in the background and watch for the output: if the VI never starts, G-CLI waits
+  without printing anything.
+- `Run Unit Tests.vi` must keep **Run when opened** (VI Properties > Execution) switched on. G-CLI
+  only opens the VI; without that setting LabVIEW never runs it and G-CLI hangs.
+- Don't use Caraya's own `Caraya CLI.vi` with G-CLI. It reads LabVIEW's command line, not G-CLI's
+  arguments, so it gets no test folder, runs nothing and quits LabVIEW.
+- In the development environment the VI leaves LabVIEW open when it finishes; it only quits
+  LabVIEW in the run-time engine.
+- Antidoc leaves it out of the docs: the "Filter out VIs" list in `antidoc.config` holds the
+  case-insensitive regular expressions `utest`, `Benchmark` and `Test`, so any VI name containing
+  "test" is skipped. Keep "Test" in the names of test VIs and test tools.
